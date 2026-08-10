@@ -11,6 +11,7 @@ import { DIFFERENTIATORS } from "@/lib/content";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Reveal } from "@/components/motion/Reveal";
 import { SpotlightCard } from "@/components/ui/SpotlightCard";
+import { Highlight } from "@/components/ui/Highlight";
 import { cn } from "@/lib/cn";
 
 const ICONS: Record<string, Icon> = {
@@ -38,7 +39,11 @@ export function WhyFinbookGrid({ showHeading = true }: { showHeading?: boolean }
         {showHeading && (
           <SectionHeading
             eyebrow="Why Finbook"
-            title="Six reasons founders stop worrying about the books."
+            title={
+              <>
+                Six reasons founders <Highlight>stop worrying</Highlight> about the books.
+              </>
+            }
           />
         )}
 

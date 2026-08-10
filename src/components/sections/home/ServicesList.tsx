@@ -4,6 +4,7 @@ import type { Icon } from "@phosphor-icons/react";
 import { SERVICES } from "@/lib/content";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Reveal } from "@/components/motion/Reveal";
+import { Highlight } from "@/components/ui/Highlight";
 
 const ICONS: Record<string, Icon> = { Books, ChartLineUp, Certificate };
 
@@ -11,7 +12,13 @@ export function ServicesList() {
   return (
     <section className="border-b border-line py-20 md:py-28">
       <div className="container-page">
-        <SectionHeading title="Three ways we plug into your finance function." />
+        <SectionHeading
+          title={
+            <>
+              Three ways we plug into your <Highlight>finance function</Highlight>.
+            </>
+          }
+        />
 
         <div className="mt-14 border-t border-line">
           {SERVICES.map((service, i) => {

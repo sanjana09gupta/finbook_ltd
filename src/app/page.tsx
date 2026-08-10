@@ -1,5 +1,5 @@
 import { Hero } from "@/components/sections/home/Hero";
-import { Stats } from "@/components/sections/Stats";
+import { BenefitShowcase } from "@/components/sections/home/BenefitShowcase";
 import { Process } from "@/components/sections/home/Process";
 import { WhyFinbookGrid } from "@/components/sections/WhyFinbookGrid";
 import { ServicesList } from "@/components/sections/home/ServicesList";
@@ -10,7 +10,7 @@ export default function Home() {
   return (
     <>
       <Hero />
-      <Stats />
+      <BenefitShowcase />
       <Process />
       <WhyFinbookGrid />
       <ServicesList />
