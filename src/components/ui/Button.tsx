@@ -1,0 +1,71 @@
+"use client";
+
+import Link from "next/link";
+import type { ReactNode } from "react";
+import { useRef } from "react";
+import { motion, useMotionValue, useSpring, useReducedMotion } from "motion/react";
+import { ArrowUpRight } from "@phosphor-icons/react/dist/ssr";
+import { cn } from "@/lib/cn";
+
+type ButtonProps = {
+  href: string;
+  children: ReactNode;
+  variant?: "primary" | "secondary" | "ghost";
+  className?: string;
+  showArrow?: boolean;
+};
+
+const variants = {
+  primary:
+    "bg-ink text-paper hover:bg-accent hover:text-paper border border-ink hover:border-accent",
+  secondary: "bg-transparent text-ink border border-ink/25 hover:border-ink",
+  ghost: "bg-transparent text-paper border border-paper/30 hover:border-paper",
+};
+
+export function Button({ href, children, variant = "primary", className, showArrow = true }: ButtonProps) {
+  const ref = useRef<HTMLAnchorElement>(null);
+  const reduce = useReducedMotion();
+  const mx = useMotionValue(0);
+  const my = useMotionValue(0);
+  const springX = useSpring(mx, { stiffness: 300, damping: 20, mass: 0.4 });
+  const springY = useSpring(my, { stiffness: 300, damping: 20, mass: 0.4 });
+
+  function handleMouseMove(e: React.MouseEvent<HTMLAnchorElement>) {
+    if (reduce || !ref.current) return;
+    const rect = ref.current.getBoundingClientRect();
+    mx.set((e.clientX - rect.left - rect.width / 2) * 0.35);
+    my.set((e.clientY - rect.top - rect.height / 2) * 0.5);
+  }
+
+  function handleMouseLeave() {
+    mx.set(0);
+    my.set(0);
+  }
+
+  return (
+    <motion.div
+      style={reduce ? undefined : { x: springX, y: springY }}
+      className="inline-block"
+    >
+      <Link
+        ref={ref}
+        href={href}
+        onMouseMove={handleMouseMove}
+        onMouseLeave={handleMouseLeave}
+        className={cn(
+          "group inline-flex items-center gap-2 whitespace-nowrap rounded-full px-6 py-3 text-sm font-medium tracking-tight transition-colors duration-300",
+          variants[variant],
+          className,
+        )}
+      >
+        {children}
+        {showArrow && (
+          <ArrowUpRight
+            weight="bold"
+            className="size-4 shrink-0 transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1"
+          />
+        )}
+      </Link>
+    </motion.div>
+  );
+}
