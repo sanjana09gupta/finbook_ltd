@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { PageHero } from "@/components/layout/PageHero";
 import { SplitImage } from "@/components/sections/SplitImage";
 import { Stats } from "@/components/sections/Stats";
+import { CredentialsBand } from "@/components/sections/CredentialsBand";
 import { TeamDetailed } from "@/components/sections/TeamDetailed";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { CtaBand } from "@/components/sections/CtaBand";
@@ -52,6 +53,8 @@ export default function AboutPage() {
       />
 
       <Stats />
+
+      <CredentialsBand />
 
       <section className="py-20 md:py-28">
         <div className="container-page">

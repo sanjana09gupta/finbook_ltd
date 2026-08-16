@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { PageHero } from "@/components/layout/PageHero";
 import { WhyFinbookGrid } from "@/components/sections/WhyFinbookGrid";
 import { ComparisonBlock } from "@/components/sections/ComparisonBlock";
+import { DeliveryTimeline } from "@/components/sections/DeliveryTimeline";
 import { Stats } from "@/components/sections/Stats";
 import { CtaBand } from "@/components/sections/CtaBand";
 
@@ -21,6 +22,7 @@ export default function WhyFinbookPage() {
       />
       <WhyFinbookGrid showHeading={false} />
       <ComparisonBlock />
+      <DeliveryTimeline />
       <Stats />
       <CtaBand />
     </>

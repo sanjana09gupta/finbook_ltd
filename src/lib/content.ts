@@ -175,39 +175,110 @@ export const PLANS = [
 
 export const TEAM = [
   {
-    name: "Alen T Jose",
-    role: "Director",
-    credentials: "B.Com, ACA",
-    bio: "Six years across bookkeeping, audit, and consultancy in finance, medical, hospitality, retail, and shipbuilding.",
-    image: "/images/teampiclg1.jpg",
-  },
-  {
-    name: "Reuben Jose",
-    role: "Director",
-    credentials: "B.Com, ACA",
-    bio: "Christ University alumnus with audit experience at Grant Thornton, working across technology, manufacturing, banking, and healthcare.",
-    image: "/images/teampiclg2.jpg",
-  },
-  {
-    name: "Allen Jose",
-    role: "Director",
-    credentials: "B.Com, ACA",
-    bio: "Four years in corporate revival under insolvency law, plus six years across taxation, audit, and accounting.",
-    image: "/images/teampiclg4.jpg",
+    name: "Raj Anindya Mitra",
+    role: "Principal Oversight & Technical Review, Director",
+    credentials: "CA (ICAI), ACA (ICAEW)",
+    bio: "Provides firm-level supervision and technical review, and holds final accountability for engagement quality across the accounting and CFO teams.",
+    image: "/images/raj.png",
   },
   {
     name: "Ruble Francis",
     role: "Director, UK Operations",
     credentials: "BSc, Actuarial Science",
-    bio: "Leads Finbook's UK client relationships and operations from London.",
+    bio: "Leads client coordination and compliance for Finbook's UK operations and client relationships, based in London.",
     image: "/images/ruble.png",
   },
   {
-    name: "Raj Anindya Mitra",
-    role: "Chartered Accountant",
-    credentials: "CA",
-    bio: "Oversees engagement quality across the accounting and CFO teams.",
-    image: "/images/raj.png",
+    name: "Allen Jose",
+    role: "Service Delivery & Review",
+    credentials: "CA (ICAI)",
+    bio: "Four years in corporate revival under insolvency law, plus six years across taxation, audit, and accounting.",
+    image: "/images/teampiclg4.jpg",
+  },
+  {
+    name: "Reuben Jose",
+    role: "Service Delivery & Review",
+    credentials: "CA (ICAI)",
+    bio: "Christ University alumnus with audit experience at Grant Thornton, working across technology, manufacturing, banking, and healthcare.",
+    image: "/images/teampiclg2.jpg",
+  },
+  {
+    name: "Alen T Jose",
+    role: "Service Delivery & Review",
+    credentials: "CA (ICAI)",
+    bio: "Six years across bookkeeping, audit, and consultancy in finance, medical, hospitality, retail, and shipbuilding.",
+    image: "/images/teampiclg1.jpg",
+  },
+] as const;
+
+export const CREDENTIALS = [
+  {
+    icon: "Certificate",
+    title: "ICAEW oversight",
+    body: "Member principal partner providing firm supervision, technical review, and accountability.",
+  },
+  {
+    icon: "ShieldCheck",
+    title: "Regulated & AML supervised",
+    body: "ICAEW-regulated practice with anti-money laundering controls and compliance procedures.",
+  },
+  {
+    icon: "Bank",
+    title: "HMRC Registered Agent",
+    body: "Authorised agent support for tax registrations, submissions, and correspondence.",
+  },
+  {
+    icon: "Buildings",
+    title: "Companies House ACSP",
+    body: "Authorised Corporate Service Provider for filing and identity verification support.",
+  },
+  {
+    icon: "UsersThree",
+    title: "10 skilled staff",
+    body: "Delivery capacity across bookkeeping, accounts, tax, payroll, and compliance.",
+  },
+  {
+    icon: "GearSix",
+    title: "Flexible support model",
+    body: "Scalable resourcing aligned to recurring, project-based, and deadline-led needs.",
+  },
+] as const;
+
+export const DELIVERY_STEPS = [
+  {
+    number: "01",
+    title: "Onboarding",
+    body: "Due diligence and scope agreed before a single record moves.",
+  },
+  {
+    number: "02",
+    title: "Information collection",
+    body: "Records and source data gathered securely from your existing systems.",
+  },
+  {
+    number: "03",
+    title: "Processing",
+    body: "Bookkeeping, reconciliation, and compliance work carried out on schedule.",
+  },
+  {
+    number: "04",
+    title: "Professional review",
+    body: "Quality control by a qualified accountant before anything goes out.",
+  },
+  {
+    number: "05",
+    title: "Authorised filing",
+    body: "Submission to the regulator through an authorised, registered agent.",
+  },
+  {
+    number: "06",
+    title: "Reporting",
+    body: "Clear confirmation and management reporting land in your inbox.",
+  },
+  {
+    number: "07",
+    title: "Ongoing support",
+    body: "Deadline monitoring continues, cycle after cycle, without a reminder from you.",
   },
 ] as const;
 
