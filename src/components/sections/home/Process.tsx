@@ -82,7 +82,7 @@ export function Process() {
                 }}
               >
                 <TiltCard strength={8}>
-                  <div className="relative flex h-44 items-center justify-center overflow-hidden rounded-2xl border border-line bg-paper-dim shadow-[0_18px_40px_-24px_rgba(20,20,20,0.25)] transition-shadow duration-300 group-hover:shadow-[0_24px_48px_-20px_rgba(218,36,13,0.28)]">
+                  <div className="relative flex h-44 items-center justify-center">
                     <Image
                       src={step.image}
                       alt=""
