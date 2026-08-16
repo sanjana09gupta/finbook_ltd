@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import { CaretLeft, CaretRight } from "@phosphor-icons/react/dist/ssr";
+import { CaretLeft, CaretRight, CircleNotch } from "@phosphor-icons/react/dist/ssr";
 
 export interface Slot {
   start: string;
@@ -69,6 +69,10 @@ export function SlotPicker({
   const grid = useMemo(() => buildMonthGrid(viewYear, viewMonth - 1, today), [viewYear, viewMonth, today]);
   const canGoPrev = !(viewYear === Number(today.slice(0, 4)) && viewMonth === Number(today.slice(5, 7)));
 
+  function goToToday() {
+    setDate(today);
+  }
+
   function changeMonth(delta: number) {
     const next = new Date(viewYear, viewMonth - 1 + delta, 1);
     setDate((current) => {
@@ -81,6 +85,7 @@ export function SlotPicker({
   useEffect(() => {
     let cancelled = false;
     setStatus("loading");
+    setSlots([]);
     fetch(`/api/booking/availability?date=${date}`)
       .then((res) => {
         if (!res.ok) throw new Error("availability request failed");
@@ -102,13 +107,12 @@ export function SlotPicker({
   }, [date, refreshKey]);
 
   return (
-    <div className="flex flex-col gap-4">
-      <div className="flex flex-col gap-2">
-        <span className="text-sm font-medium text-ink">Choose a day</span>
-        <div className="w-fit rounded-2xl border border-line bg-paper p-4">
-          <div className="mb-3 flex items-center justify-between">
-            <span className="text-sm font-semibold text-ink">{MONTH_LABEL.format(new Date(viewYear, viewMonth - 1, 1))}</span>
-            <div className="flex gap-1">
+    <div className="flex flex-col items-start gap-2">
+      <span className="text-sm font-medium text-ink">Choose a day and time</span>
+      <div className="flex w-full max-w-[420px] flex-col rounded-2xl border border-line bg-paper shadow-sm md:w-auto md:max-w-none">
+        <div className="flex flex-col md:flex-row">
+          <div className="w-full shrink-0 p-4 md:w-72">
+            <div className="mb-3 grid grid-cols-[auto_1fr_auto] items-center">
               <button
                 type="button"
                 aria-label="Previous month"
@@ -118,6 +122,7 @@ export function SlotPicker({
               >
                 <CaretLeft size={16} weight="bold" />
               </button>
+              <span className="text-center text-sm font-semibold text-ink">{MONTH_LABEL.format(new Date(viewYear, viewMonth - 1, 1))}</span>
               <button
                 type="button"
                 aria-label="Next month"
@@ -127,67 +132,101 @@ export function SlotPicker({
                 <CaretRight size={16} weight="bold" />
               </button>
             </div>
+
+            <div className="grid grid-cols-7 gap-1 text-center text-xs text-muted">
+              {WEEKDAY_LABELS.map((label) => (
+                <span key={label} className="py-1">
+                  {label}
+                </span>
+              ))}
+            </div>
+
+            <div className="grid grid-cols-7 gap-1">
+              {grid.map((cell, i) => {
+                if (!cell.inMonth) return <span key={i} className="aspect-square" />;
+                const disabled = cell.isPast || cell.isWeekend;
+                const selected = cell.iso === date;
+                const isToday = cell.iso === today;
+                return (
+                  <button
+                    key={cell.iso}
+                    type="button"
+                    disabled={disabled}
+                    onClick={() => setDate(cell.iso)}
+                    className={`relative aspect-square rounded-full text-sm transition-colors ${
+                      selected
+                        ? "bg-accent text-paper"
+                        : disabled
+                          ? "cursor-not-allowed text-muted/50"
+                          : "text-ink hover:bg-paper-dim"
+                    }`}
+                  >
+                    {cell.day}
+                    {isToday && (
+                      <span
+                        className={`absolute bottom-1 left-1/2 size-1 -translate-x-1/2 rounded-full ${selected ? "bg-paper" : "bg-accent"}`}
+                      />
+                    )}
+                  </button>
+                );
+              })}
+            </div>
           </div>
 
-          <div className="grid grid-cols-7 gap-1 text-center text-xs text-muted">
-            {WEEKDAY_LABELS.map((label) => (
-              <span key={label} className="py-1">
-                {label}
-              </span>
-            ))}
+          <div className="flex w-full shrink-0 flex-col border-t border-line md:w-48 md:border-t-0 md:border-l">
+            <span className="px-4 pt-4 pb-2 text-center text-sm font-semibold text-ink">Available times</span>
+            {status === "loading" && (
+              <div className="flex flex-col items-center gap-2 px-4 py-6 text-sm text-muted">
+                <CircleNotch size={18} className="animate-spin text-accent" />
+                Fetching available times…
+              </div>
+            )}
+            {status === "error" && (
+              <p className="px-4 py-3 text-center text-sm text-accent">Couldn&apos;t load times. Try another day.</p>
+            )}
+            {status === "idle" && slots.length === 0 && (
+              <p className="px-4 py-3 text-center text-sm text-muted">No open times. Try another day.</p>
+            )}
+            {slots.length > 0 && (
+              <ul className="flex max-h-64 flex-col gap-1.5 overflow-y-auto pl-3 pr-1.5 pb-3 [scrollbar-width:thin] [&::-webkit-scrollbar]:w-1.5 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-line [&::-webkit-scrollbar-track]:bg-transparent">
+                {slots.map((slot) => {
+                  const selected = selectedSlot?.start === slot.start;
+                  return (
+                    <li key={slot.start}>
+                      <button
+                        type="button"
+                        onClick={() => onSelect(slot)}
+                        className={`w-full rounded-lg border px-3 py-2 text-sm transition-colors ${
+                          selected
+                            ? "border-accent bg-accent text-paper"
+                            : "border-line bg-paper text-ink hover:border-accent"
+                        }`}
+                      >
+                        {formatSlotLabel(slot.start)}
+                      </button>
+                    </li>
+                  );
+                })}
+              </ul>
+            )}
           </div>
+        </div>
 
-          <div className="grid grid-cols-7 gap-1">
-            {grid.map((cell, i) => {
-              if (!cell.inMonth) return <span key={i} className="aspect-square" />;
-              const disabled = cell.isPast || cell.isWeekend;
-              const selected = cell.iso === date;
-              return (
-                <button
-                  key={cell.iso}
-                  type="button"
-                  disabled={disabled}
-                  onClick={() => setDate(cell.iso)}
-                  className={`aspect-square rounded-full text-sm transition-colors ${
-                    selected
-                      ? "bg-ink text-paper"
-                      : disabled
-                        ? "cursor-not-allowed text-muted/50"
-                        : "text-ink hover:bg-paper-dim"
-                  }`}
-                >
-                  {cell.day}
-                </button>
-              );
-            })}
-          </div>
+        <div className="flex items-center gap-2 border-t border-line p-3">
+          <span className="rounded-lg border border-line px-3 py-1.5 text-sm text-ink">
+            {new Date(`${date}T00:00:00`).toLocaleDateString(undefined, { day: "2-digit", month: "2-digit", year: "numeric" })}
+          </span>
+          <button
+            type="button"
+            onClick={goToToday}
+            className={`rounded-lg border px-3 py-1.5 text-sm font-medium transition-colors ${
+              date === today ? "border-accent text-accent" : "border-line text-ink hover:bg-paper-dim"
+            }`}
+          >
+            Today
+          </button>
         </div>
       </div>
-
-      {status === "loading" && <p className="text-sm text-muted">Loading available times…</p>}
-      {status === "error" && <p className="text-sm text-accent">Couldn&apos;t load times. Try another day.</p>}
-      {status === "idle" && slots.length === 0 && (
-        <p className="text-sm text-muted">No open times on this day. Try another day.</p>
-      )}
-
-      {slots.length > 0 && (
-        <div className="grid grid-cols-3 gap-2 sm:grid-cols-4">
-          {slots.map((slot) => (
-            <button
-              key={slot.start}
-              type="button"
-              onClick={() => onSelect(slot)}
-              className={`rounded-lg border px-3 py-2 text-sm transition-colors ${
-                selectedSlot?.start === slot.start
-                  ? "border-ink bg-ink text-paper"
-                  : "border-line bg-paper text-ink hover:border-ink"
-              }`}
-            >
-              {formatSlotLabel(slot.start)}
-            </button>
-          ))}
-        </div>
-      )}
     </div>
   );
 }
