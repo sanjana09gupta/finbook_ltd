@@ -15,7 +15,7 @@ Replace the current `mailto:` contact form behaviour with a required, self-servi
 - Slot rendering in the visitor's local timezone.
 - Google Calendar free/busy lookup and a final availability check before booking.
 - A private Google Calendar event with the visitor as an attendee and a unique Google Meet conference.
-- Visitor and owner confirmation emails from `hello@finbookglobal.com`.
+- Google Calendar invitations to visitors and a demo-only owner notification sent to the owner's personal Gmail through Resend.
 - Persistent bookings and a database uniqueness constraint to prevent double bookings.
 - Bot protection and server-side validation.
 
@@ -93,12 +93,9 @@ Google Calendar remains the operational source of truth for the owner's schedule
 
 ## Email and notifications
 
-Google Calendar supplies the canonical invitation and Meet link to the attendee. Resend supplies:
+Google Calendar supplies the canonical attendee invitation and Meet link. For the demo, Resend uses its test sender and sends an internal booking summary only to the Gmail address associated with the Resend account. The visitor receives their Google Calendar invitation directly from Google.
 
-1. A branded confirmation to the visitor with their confirmed time and a reminder to use the calendar invite for the Meet link.
-2. An internal booking summary to the calendar owner's Gmail address, including visitor details and message.
-
-If branded email fails after the Calendar event is created, the booking remains confirmed and the failure is logged for retry; the visitor still receives the Google Calendar invitation.
+Resend cannot send from a personal Gmail address or deliver test-sender messages to arbitrary recipients. Once `finbookglobal.com` is verified in Resend, the production configuration can send branded confirmations from `hello@finbookglobal.com` to visitors and the owner. If an email fails after the Calendar event is created, the booking remains confirmed and the failure is logged for retry; the visitor still receives the Google Calendar invitation.
 
 ## Security and reliability
 
@@ -125,7 +122,7 @@ The application will use this configuration:
 ```dotenv
 GOOGLE_CLIENT_ID=
 GOOGLE_CLIENT_SECRET=
-GOOGLE_REDIRECT_URI=
+GOOGLE_REDIRECT_URI=https://finbookglobal.vercel.app/api/google/callback
 GOOGLE_CALENDAR_ID=primary
 GOOGLE_REFRESH_TOKEN=
 
@@ -133,7 +130,8 @@ NEXT_PUBLIC_TURNSTILE_SITE_KEY=
 TURNSTILE_SECRET_KEY=
 
 RESEND_API_KEY=
-BOOKING_FROM_EMAIL=Finbook Global <hello@finbookglobal.com>
+BOOKING_DEMO_MODE=true
+BOOKING_FROM_EMAIL=Finbook Global <onboarding@resend.dev>
 BOOKING_OWNER_EMAIL=
 
 NEXT_PUBLIC_SUPABASE_URL=
@@ -141,6 +139,8 @@ SUPABASE_SERVICE_ROLE_KEY=
 ```
 
 The production deployment will also have a server-side rate-limit provider configuration if the hosting platform does not supply suitable built-in protection.
+
+For local Google authorization, temporarily change `GOOGLE_REDIRECT_URI` to `http://localhost:3000/api/google/callback`; configure both that URI and the Vercel deployment URI in Google Cloud OAuth settings.
 
 ## Acceptance criteria
 
