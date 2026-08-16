@@ -15,6 +15,7 @@ declare global {
 export function ContactForm() {
   const [values, setValues] = useState({ name: "", email: "", company: "", phone: "", message: "" });
   const [slot, setSlot] = useState<Slot | null>(null);
+  const [refreshToken, setRefreshToken] = useState(0);
   const [errors, setErrors] = useState<Errors>({});
   const [submitting, setSubmitting] = useState(false);
   const [confirmed, setConfirmed] = useState<{ meetUrl: string; slotStart: string } | null>(null);
@@ -54,6 +55,7 @@ export function ContactForm() {
       if (res.status === 409) {
         setErrors({ slotStart: "That time was just taken. Pick another." });
         setSlot(null);
+        setRefreshToken((n) => n + 1);
         return;
       }
       if (!res.ok) {
@@ -98,8 +100,13 @@ export function ContactForm() {
             className="rounded-lg border border-line bg-paper px-4 py-2.5 text-sm text-ink placeholder:text-muted/60 focus:border-ink focus:outline-none"
             placeholder="Jordan Fernandez"
             aria-invalid={!!errors.name}
+            aria-describedby={errors.name ? "name-error" : undefined}
           />
-          {errors.name && <p className="text-xs text-accent">{errors.name}</p>}
+          {errors.name && (
+            <p id="name-error" className="text-xs text-accent">
+              {errors.name}
+            </p>
+          )}
         </div>
 
         <div className="flex flex-col gap-2">
@@ -114,8 +121,13 @@ export function ContactForm() {
             className="rounded-lg border border-line bg-paper px-4 py-2.5 text-sm text-ink placeholder:text-muted/60 focus:border-ink focus:outline-none"
             placeholder="jordan@company.com"
             aria-invalid={!!errors.email}
+            aria-describedby={errors.email ? "email-error" : undefined}
           />
-          {errors.email && <p className="text-xs text-accent">{errors.email}</p>}
+          {errors.email && (
+            <p id="email-error" className="text-xs text-accent">
+              {errors.email}
+            </p>
+          )}
         </div>
       </div>
 
@@ -161,12 +173,17 @@ export function ContactForm() {
           className="resize-none rounded-lg border border-line bg-paper px-4 py-3 text-sm text-ink placeholder:text-muted/60 focus:border-ink focus:outline-none"
           placeholder="A short note on your business and what you're looking for."
           aria-invalid={!!errors.message}
+          aria-describedby={errors.message ? "message-error" : undefined}
         />
-        {errors.message && <p className="text-xs text-accent">{errors.message}</p>}
+        {errors.message && (
+          <p id="message-error" className="text-xs text-accent">
+            {errors.message}
+          </p>
+        )}
       </div>
 
       <div className="flex flex-col gap-2 border-t border-line pt-5">
-        <SlotPicker selectedSlot={slot} onSelect={setSlot} />
+        <SlotPicker selectedSlot={slot} onSelect={setSlot} refreshKey={refreshToken} />
         {errors.slotStart && <p className="text-xs text-accent">{errors.slotStart}</p>}
       </div>
 

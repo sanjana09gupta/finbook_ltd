@@ -18,9 +18,11 @@ function todayIso() {
 export function SlotPicker({
   selectedSlot,
   onSelect,
+  refreshKey,
 }: {
   selectedSlot: Slot | null;
   onSelect: (slot: Slot) => void;
+  refreshKey?: number;
 }) {
   const [date, setDate] = useState(todayIso());
   const [slots, setSlots] = useState<Slot[]>([]);
@@ -47,7 +49,7 @@ export function SlotPicker({
     return () => {
       cancelled = true;
     };
-  }, [date]);
+  }, [date, refreshKey]);
 
   return (
     <div className="flex flex-col gap-4">
