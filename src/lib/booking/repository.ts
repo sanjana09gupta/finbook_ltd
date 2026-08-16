@@ -52,7 +52,7 @@ export async function reserveSlot(input: ReserveInput): Promise<ReserveResult> {
 
 export async function confirmBooking(id: string, googleEventId: string, meetUrl: string): Promise<void> {
   const { url, key } = supabaseConfig();
-  await fetch(`${url}/rest/v1/bookings?id=eq.${id}`, {
+  const res = await fetch(`${url}/rest/v1/bookings?id=eq.${id}`, {
     method: "PATCH",
     headers: headers(key),
     body: JSON.stringify({
@@ -62,6 +62,9 @@ export async function confirmBooking(id: string, googleEventId: string, meetUrl:
       updated_at: new Date().toISOString(),
     }),
   });
+  if (!res.ok) {
+    console.error(`confirmBooking PATCH failed for booking ${id}: ${res.status}`);
+  }
 }
 
 export async function releaseBooking(id: string): Promise<void> {

@@ -56,6 +56,17 @@ describe("repository", () => {
     });
   });
 
+  it("confirmBooking logs but does not throw when the PATCH response is not ok", async () => {
+    vi.mocked(fetch).mockResolvedValue(new Response("boom", { status: 500 }));
+    const errorSpy = vi.spyOn(console, "error").mockImplementation(() => {});
+    await expect(
+      confirmBooking("booking-1", "event-1", "https://meet.google.com/abc-defg-hij"),
+    ).resolves.toBeUndefined();
+    expect(errorSpy).toHaveBeenCalledWith(expect.stringContaining("booking-1"));
+    expect(errorSpy).toHaveBeenCalledWith(expect.stringContaining("500"));
+    errorSpy.mockRestore();
+  });
+
   it("releaseBooking DELETEs the row", async () => {
     vi.mocked(fetch).mockResolvedValue(new Response(null, { status: 204 }));
     await releaseBooking("booking-1");

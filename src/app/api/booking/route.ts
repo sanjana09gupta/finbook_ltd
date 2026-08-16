@@ -39,6 +39,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "That slot is no longer available." }, { status });
   }
 
+  let confirmed = false;
   try {
     const accessToken = await getAccessToken();
 
@@ -62,6 +63,7 @@ export async function POST(req: NextRequest) {
     });
 
     await confirmBooking(reservation.id, eventId, meetUrl);
+    confirmed = true;
     await sendOwnerNotification({
       name: input.name,
       email: input.email,
@@ -75,7 +77,9 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ meetUrl, slotStart: input.slotStart });
   } catch (err) {
     console.error("Booking confirmation failed", err);
-    await releaseBooking(reservation.id);
+    if (!confirmed) {
+      await releaseBooking(reservation.id);
+    }
     return NextResponse.json({ error: "Booking failed. Please try again." }, { status: 502 });
   }
 }

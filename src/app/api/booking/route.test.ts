@@ -18,6 +18,7 @@ import { POST } from "./route";
 import { verifyTurnstileToken } from "@/lib/booking/turnstile";
 import { reserveSlot, releaseBooking } from "@/lib/booking/repository";
 import { createCalendarEvent, getBusyPeriods } from "@/lib/booking/google-calendar";
+import { sendOwnerNotification } from "@/lib/booking/mailer";
 
 const VALID_BODY = {
   name: "Jordan Fernandez",
@@ -85,5 +86,14 @@ describe("POST /api/booking", () => {
     const res = await POST(requestWith(VALID_BODY));
     expect(res.status).toBe(502);
     expect(releaseBooking).toHaveBeenCalledWith("booking-1");
+  });
+
+  it("does not release the reservation when a failure happens after confirmBooking already succeeded", async () => {
+    // sendOwnerNotification never actually throws in mailer.ts (it swallows errors),
+    // but this simulates a future step added after confirmBooking to exercise the guard.
+    vi.mocked(sendOwnerNotification).mockRejectedValueOnce(new Error("mail provider down"));
+    const res = await POST(requestWith(VALID_BODY));
+    expect(res.status).toBe(502);
+    expect(releaseBooking).not.toHaveBeenCalled();
   });
 });
