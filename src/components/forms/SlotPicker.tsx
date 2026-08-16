@@ -122,7 +122,7 @@ export function SlotPicker({
                 aria-label="Previous month"
                 disabled={!canGoPrev}
                 onClick={() => changeMonth(-1)}
-                className="rounded-full p-1.5 text-ink transition-colors hover:bg-paper-dim disabled:cursor-not-allowed disabled:opacity-30 disabled:hover:bg-transparent"
+                className="flex size-11 items-center justify-center rounded-full text-ink transition-colors hover:bg-paper-dim disabled:cursor-not-allowed disabled:opacity-30 disabled:hover:bg-transparent"
               >
                 <LeftOutlined className="[&>svg]:size-4" />
               </button>
@@ -131,7 +131,7 @@ export function SlotPicker({
                 type="button"
                 aria-label="Next month"
                 onClick={() => changeMonth(1)}
-                className="rounded-full p-1.5 text-ink transition-colors hover:bg-paper-dim"
+                className="flex size-11 items-center justify-center rounded-full text-ink transition-colors hover:bg-paper-dim"
               >
                 <RightOutlined className="[&>svg]:size-4" />
               </button>
@@ -192,7 +192,7 @@ export function SlotPicker({
               <p className="px-4 py-3 text-center text-sm text-muted">No open times. Try another day.</p>
             )}
             {slots.length > 0 && (
-              <ul className="flex max-h-64 flex-col gap-1.5 overflow-y-auto pl-3 pr-1.5 pb-3 [scrollbar-width:thin] [&::-webkit-scrollbar]:w-1.5 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-line [&::-webkit-scrollbar-track]:bg-transparent">
+              <ul className="flex flex-col gap-1.5 pl-3 pr-1.5 pb-3 md:max-h-64 md:overflow-y-auto md:[scrollbar-width:thin] md:[&::-webkit-scrollbar]:w-1.5 md:[&::-webkit-scrollbar-thumb]:rounded-full md:[&::-webkit-scrollbar-thumb]:bg-line md:[&::-webkit-scrollbar-track]:bg-transparent">
                 {slots.map((slot) => {
                   const selected = selectedSlot?.start === slot.start;
                   return (

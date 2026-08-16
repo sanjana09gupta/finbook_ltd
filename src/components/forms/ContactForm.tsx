@@ -12,6 +12,21 @@ declare global {
   }
 }
 
+// Matches top-to-bottom field order so the first error the user sees
+// scrolling down is also the first one flagged.
+const FIELD_ORDER: (keyof Errors)[] = ["name", "email", "message", "slotStart", "turnstileToken"];
+
+function focusFirstError(errs: Errors) {
+  const firstKey = FIELD_ORDER.find((key) => errs[key]);
+  if (!firstKey) return;
+  const el = document.getElementById(firstKey);
+  if (!el) return;
+  el.scrollIntoView({ behavior: "smooth", block: "center" });
+  if (el instanceof HTMLInputElement || el instanceof HTMLTextAreaElement) {
+    el.focus({ preventScroll: true });
+  }
+}
+
 export function ContactForm() {
   const [values, setValues] = useState({ name: "", email: "", company: "", phone: "", message: "" });
   const [slot, setSlot] = useState<Slot | null>(null);
@@ -34,12 +49,15 @@ export function ContactForm() {
     const next = validate();
     if (Object.keys(next).length > 0) {
       setErrors(next);
+      focusFirstError(next);
       return;
     }
 
     const turnstileToken = window.turnstile?.getResponse();
     if (!turnstileToken) {
-      setErrors({ turnstileToken: "Complete the verification check before booking." });
+      const turnstileError: Errors = { turnstileToken: "Complete the verification check before booking." };
+      setErrors(turnstileError);
+      focusFirstError(turnstileError);
       return;
     }
 
@@ -53,14 +71,18 @@ export function ContactForm() {
       });
 
       if (res.status === 409) {
-        setErrors({ slotStart: "That time was just taken. Pick another." });
+        const slotError: Errors = { slotStart: "That time was just taken. Pick another." };
+        setErrors(slotError);
         setSlot(null);
         setRefreshToken((n) => n + 1);
+        focusFirstError(slotError);
         return;
       }
       if (!res.ok) {
         const body = await res.json().catch(() => ({}));
-        setErrors(body.errors ?? { message: "Something went wrong. Please try again." });
+        const submitError: Errors = body.errors ?? { message: "Something went wrong. Please try again." };
+        setErrors(submitError);
+        focusFirstError(submitError);
         return;
       }
 
@@ -97,7 +119,7 @@ export function ContactForm() {
             type="text"
             value={values.name}
             onChange={(e) => setValues((v) => ({ ...v, name: e.target.value }))}
-            className="rounded-lg border border-line bg-paper px-4 py-2.5 text-sm text-ink placeholder:text-muted/60 focus:border-ink focus:outline-none"
+            className="rounded-lg border border-line bg-paper px-4 py-2.5 text-base text-ink placeholder:text-muted/60 focus:border-ink focus:outline-none md:text-sm"
             placeholder="Jordan Fernandez"
             aria-invalid={!!errors.name}
             aria-describedby={errors.name ? "name-error" : undefined}
@@ -118,7 +140,7 @@ export function ContactForm() {
             type="email"
             value={values.email}
             onChange={(e) => setValues((v) => ({ ...v, email: e.target.value }))}
-            className="rounded-lg border border-line bg-paper px-4 py-2.5 text-sm text-ink placeholder:text-muted/60 focus:border-ink focus:outline-none"
+            className="rounded-lg border border-line bg-paper px-4 py-2.5 text-base text-ink placeholder:text-muted/60 focus:border-ink focus:outline-none md:text-sm"
             placeholder="jordan@company.com"
             aria-invalid={!!errors.email}
             aria-describedby={errors.email ? "email-error" : undefined}
@@ -141,7 +163,7 @@ export function ContactForm() {
             type="text"
             value={values.company}
             onChange={(e) => setValues((v) => ({ ...v, company: e.target.value }))}
-            className="rounded-lg border border-line bg-paper px-4 py-2.5 text-sm text-ink placeholder:text-muted/60 focus:border-ink focus:outline-none"
+            className="rounded-lg border border-line bg-paper px-4 py-2.5 text-base text-ink placeholder:text-muted/60 focus:border-ink focus:outline-none md:text-sm"
             placeholder="Company name"
           />
         </div>
@@ -155,7 +177,7 @@ export function ContactForm() {
             type="tel"
             value={values.phone}
             onChange={(e) => setValues((v) => ({ ...v, phone: e.target.value }))}
-            className="rounded-lg border border-line bg-paper px-4 py-2.5 text-sm text-ink placeholder:text-muted/60 focus:border-ink focus:outline-none"
+            className="rounded-lg border border-line bg-paper px-4 py-2.5 text-base text-ink placeholder:text-muted/60 focus:border-ink focus:outline-none md:text-sm"
             placeholder="+44 7000 000000"
           />
         </div>
@@ -170,7 +192,7 @@ export function ContactForm() {
           rows={5}
           value={values.message}
           onChange={(e) => setValues((v) => ({ ...v, message: e.target.value }))}
-          className="resize-none rounded-lg border border-line bg-paper px-4 py-3 text-sm text-ink placeholder:text-muted/60 focus:border-ink focus:outline-none"
+          className="resize-none rounded-lg border border-line bg-paper px-4 py-3 text-base text-ink placeholder:text-muted/60 focus:border-ink focus:outline-none md:text-sm"
           placeholder="A short note on your business and what you're looking for."
           aria-invalid={!!errors.message}
           aria-describedby={errors.message ? "message-error" : undefined}
@@ -182,13 +204,14 @@ export function ContactForm() {
         )}
       </div>
 
-      <div className="flex flex-col gap-2 border-t border-line pt-5">
+      <div id="slotStart" className="flex flex-col gap-2 border-t border-line pt-5 scroll-mt-24">
         <SlotPicker selectedSlot={slot} onSelect={setSlot} refreshKey={refreshToken} />
         {errors.slotStart && <p className="text-xs text-accent">{errors.slotStart}</p>}
       </div>
 
       <div
-        className="cf-turnstile"
+        id="turnstileToken"
+        className="cf-turnstile scroll-mt-24"
         data-sitekey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY}
         data-theme="light"
       />
