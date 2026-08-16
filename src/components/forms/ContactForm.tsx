@@ -2,47 +2,84 @@
 
 import { useState, type FormEvent } from "react";
 import { CheckCircleFilled } from "@ant-design/icons";
-import { SITE } from "@/lib/content";
+import { SlotPicker, type Slot } from "./SlotPicker";
 
-type Errors = Partial<Record<"name" | "email" | "message", string>>;
+type Errors = Partial<Record<"name" | "email" | "message" | "slotStart" | "turnstileToken", string>>;
+
+declare global {
+  interface Window {
+    turnstile?: { getResponse: (widgetId?: string) => string | undefined };
+  }
+}
 
 export function ContactForm() {
-  const [values, setValues] = useState({ name: "", email: "", company: "", message: "" });
+  const [values, setValues] = useState({ name: "", email: "", company: "", phone: "", message: "" });
+  const [slot, setSlot] = useState<Slot | null>(null);
+  const [refreshToken, setRefreshToken] = useState(0);
   const [errors, setErrors] = useState<Errors>({});
-  const [sent, setSent] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [confirmed, setConfirmed] = useState<{ meetUrl: string; slotStart: string } | null>(null);
 
-  function validate() {
+  function validate(): Errors {
     const next: Errors = {};
     if (!values.name.trim()) next.name = "Enter your name.";
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(values.email)) next.email = "Enter a valid email.";
     if (!values.message.trim()) next.message = "Tell us a little about what you need.";
-    setErrors(next);
-    return Object.keys(next).length === 0;
+    if (!slot) next.slotStart = "Choose a time before booking.";
+    return next;
   }
 
-  function handleSubmit(e: FormEvent) {
+  async function handleSubmit(e: FormEvent) {
     e.preventDefault();
-    if (!validate()) return;
+    const next = validate();
+    if (Object.keys(next).length > 0) {
+      setErrors(next);
+      return;
+    }
 
-    const subject = encodeURIComponent(`New enquiry from ${values.name}`);
-    const body = encodeURIComponent(
-      `Name: ${values.name}\nEmail: ${values.email}\nCompany: ${values.company || "-"}\n\n${values.message}`,
-    );
-    window.location.href = `mailto:${SITE.email}?subject=${subject}&body=${body}`;
-    setSent(true);
+    const turnstileToken = window.turnstile?.getResponse();
+    if (!turnstileToken) {
+      setErrors({ turnstileToken: "Complete the verification check before booking." });
+      return;
+    }
+
+    setSubmitting(true);
+    setErrors({});
+    try {
+      const res = await fetch("/api/booking", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ ...values, slotStart: slot!.start, slotEnd: slot!.end, turnstileToken }),
+      });
+
+      if (res.status === 409) {
+        setErrors({ slotStart: "That time was just taken. Pick another." });
+        setSlot(null);
+        setRefreshToken((n) => n + 1);
+        return;
+      }
+      if (!res.ok) {
+        const body = await res.json().catch(() => ({}));
+        setErrors(body.errors ?? { message: "Something went wrong. Please try again." });
+        return;
+      }
+
+      const body = (await res.json()) as { meetUrl: string; slotStart: string };
+      setConfirmed(body);
+    } finally {
+      setSubmitting(false);
+    }
   }
 
-  if (sent) {
+  if (confirmed) {
     return (
       <div className="flex flex-col items-start gap-3 rounded-2xl border border-line bg-paper-dim p-8">
         <CheckCircleFilled className="[&>svg]:size-8 text-accent" />
-        <h3 className="text-lg font-medium text-ink">Your email client should be open</h3>
+        <h3 className="text-lg font-medium text-ink">
+          Booked for {new Date(confirmed.slotStart).toLocaleString("en-GB", { dateStyle: "full", timeStyle: "short" })}
+        </h3>
         <p className="text-sm leading-relaxed text-muted">
-          If it didn&apos;t open automatically, write to us directly at{" "}
-          <a href={`mailto:${SITE.email}`} className="text-ink underline underline-offset-2">
-            {SITE.email}
-          </a>
-          .
+          Check your email for the calendar invite — it includes your Google Meet link.
         </p>
       </div>
     );
@@ -94,18 +131,34 @@ export function ContactForm() {
         </div>
       </div>
 
-      <div className="flex flex-col gap-2">
-        <label htmlFor="company" className="text-sm font-medium text-ink">
-          Company <span className="font-normal text-muted">(optional)</span>
-        </label>
-        <input
-          id="company"
-          type="text"
-          value={values.company}
-          onChange={(e) => setValues((v) => ({ ...v, company: e.target.value }))}
-          className="rounded-lg border border-line bg-paper px-4 py-2.5 text-sm text-ink placeholder:text-muted/60 focus:border-ink focus:outline-none"
-          placeholder="Company name"
-        />
+      <div className="grid gap-5 sm:grid-cols-2">
+        <div className="flex flex-col gap-2">
+          <label htmlFor="company" className="text-sm font-medium text-ink">
+            Company <span className="font-normal text-muted">(optional)</span>
+          </label>
+          <input
+            id="company"
+            type="text"
+            value={values.company}
+            onChange={(e) => setValues((v) => ({ ...v, company: e.target.value }))}
+            className="rounded-lg border border-line bg-paper px-4 py-2.5 text-sm text-ink placeholder:text-muted/60 focus:border-ink focus:outline-none"
+            placeholder="Company name"
+          />
+        </div>
+
+        <div className="flex flex-col gap-2">
+          <label htmlFor="phone" className="text-sm font-medium text-ink">
+            Phone <span className="font-normal text-muted">(optional)</span>
+          </label>
+          <input
+            id="phone"
+            type="tel"
+            value={values.phone}
+            onChange={(e) => setValues((v) => ({ ...v, phone: e.target.value }))}
+            className="rounded-lg border border-line bg-paper px-4 py-2.5 text-sm text-ink placeholder:text-muted/60 focus:border-ink focus:outline-none"
+            placeholder="+44 7000 000000"
+          />
+        </div>
       </div>
 
       <div className="flex flex-col gap-2">
@@ -129,11 +182,24 @@ export function ContactForm() {
         )}
       </div>
 
+      <div className="flex flex-col gap-2 border-t border-line pt-5">
+        <SlotPicker selectedSlot={slot} onSelect={setSlot} refreshKey={refreshToken} />
+        {errors.slotStart && <p className="text-xs text-accent">{errors.slotStart}</p>}
+      </div>
+
+      <div
+        className="cf-turnstile"
+        data-sitekey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY}
+        data-theme="light"
+      />
+      {errors.turnstileToken && <p className="text-xs text-accent">{errors.turnstileToken}</p>}
+
       <button
         type="submit"
-        className="mt-2 w-fit rounded-full bg-ink px-6 py-3 text-sm font-medium text-paper transition-colors hover:bg-accent"
+        disabled={submitting}
+        className="mt-2 w-fit rounded-full bg-ink px-6 py-3 text-sm font-medium text-paper transition-colors hover:bg-accent disabled:opacity-60"
       >
-        Send message
+        {submitting ? "Booking…" : "Book consultation"}
       </button>
     </form>
   );
