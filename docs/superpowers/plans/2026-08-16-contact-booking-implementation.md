@@ -12,7 +12,7 @@
 
 - Business hours: Monday–Friday, 09:00–17:00, `Europe/London`, 30-minute slots, no buffer. (spec §Scope)
 - No new runtime dependencies for Google/Resend/Supabase/Turnstile — use `fetch` against their REST APIs. (ponytail: avoid SDKs the project doesn't already use)
-- All secrets (`GOOGLE_CLIENT_SECRET`, `GOOGLE_REFRESH_TOKEN`, `SUPABASE_SERVICE_ROLE_KEY`, `RESEND_API_KEY`, `TURNSTILE_SECRET_KEY`) are read only in server-side modules/route handlers, never in client components. (spec §Security)
+- All secrets (`GOOGLE_CLIENT_SECRET`, `GOOGLE_REFRESH_TOKEN`, `SUPABASE_SECRET_KEY`, `RESEND_API_KEY`, `TURNSTILE_SECRET_KEY`) are read only in server-side modules/route handlers, never in client components. (spec §Security)
 - `slot_start` has a unique constraint in `bookings`; reservation happens before the Google Calendar call so concurrent requests can't double-book. (spec §Data model)
 - Excluded from v1: reschedule/cancel UI, multi-staff calendars, payments, CRM sync. Do not build these. (spec §Excluded)
 
@@ -577,7 +577,7 @@ git commit -m "feat: add booking input validation"
   - `reserveSlot(input: ReserveInput): Promise<ReserveResult>`
   - `confirmBooking(id: string, googleEventId: string, meetUrl: string): Promise<void>`
   - `releaseBooking(id: string): Promise<void>`
-- Reads `NEXT_PUBLIC_SUPABASE_URL` and `SUPABASE_SERVICE_ROLE_KEY` from `process.env` at call time (not at module load, so tests can stub `fetch` without needing real env values).
+- Reads `NEXT_PUBLIC_SUPABASE_URL` and `SUPABASE_SECRET_KEY` from `process.env` at call time (not at module load, so tests can stub `fetch` without needing real env values).
 
 - [ ] **Step 1: Write the migration SQL**
 
@@ -601,12 +601,12 @@ create table if not exists public.bookings (
 );
 
 alter table public.bookings enable row level security;
--- No public policies: only the service-role key (used server-side only) may read/write this table.
+-- No public policies: only the secret key (used server-side only) may read/write this table.
 ```
 
 - [ ] **Step 2: Apply the migration**
 
-Use the Supabase MCP `apply_migration` tool (project has no linked Supabase CLI project yet) with the SQL above, name `create_bookings`. If no Supabase project exists yet, create one first with the MCP `create_project` tool, then run `get_project_url` and a service-role key lookup to fill `NEXT_PUBLIC_SUPABASE_URL` and `SUPABASE_SERVICE_ROLE_KEY` in `.env`.
+Use the Supabase MCP `apply_migration` tool (project has no linked Supabase CLI project yet) with the SQL above, name `create_bookings`. If no Supabase project exists yet, create one first with the MCP `create_project` tool, then run `get_project_url` and a secret-key lookup to fill `NEXT_PUBLIC_SUPABASE_URL` and `SUPABASE_SECRET_KEY` in `.env`.
 
 Expected: `list_tables` shows `public.bookings` with the columns above.
 
@@ -628,7 +628,7 @@ const INPUT = {
 describe("repository", () => {
   beforeEach(() => {
     process.env.NEXT_PUBLIC_SUPABASE_URL = "https://example.supabase.co";
-    process.env.SUPABASE_SERVICE_ROLE_KEY = "test-service-role-key";
+    process.env.SUPABASE_SECRET_KEY = "test-secret-key";
     vi.stubGlobal("fetch", vi.fn());
   });
 
@@ -706,7 +706,7 @@ export type ReserveResult = { ok: true; id: string } | { ok: false; reason: "con
 
 function supabaseConfig() {
   const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
-  const key = process.env.SUPABASE_SERVICE_ROLE_KEY;
+  const key = process.env.SUPABASE_SECRET_KEY;
   if (!url || !key) throw new Error("Supabase environment variables are not configured.");
   return { url, key };
 }
@@ -1966,7 +1966,7 @@ BOOKING_OWNER_EMAIL=
 
 # Supabase
 NEXT_PUBLIC_SUPABASE_URL=
-SUPABASE_SERVICE_ROLE_KEY=
+SUPABASE_SECRET_KEY=
 
 # Cloudflare Turnstile
 NEXT_PUBLIC_TURNSTILE_SITE_KEY=
