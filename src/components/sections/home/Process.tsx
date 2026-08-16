@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { motion, useReducedMotion } from "motion/react";
-import { ArrowRight } from "@phosphor-icons/react/dist/ssr";
+import { ArrowRightOutlined } from "@ant-design/icons";
 import { PROCESS_STEPS } from "@/lib/content";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Reveal } from "@/components/motion/Reveal";
@@ -29,7 +29,7 @@ export function Process() {
 
         <div className="relative mt-16 grid gap-12 md:grid-cols-3 md:gap-8">
           <svg
-            className="pointer-events-none absolute left-0 right-0 top-[88px] hidden w-full md:block"
+            className="pointer-events-none absolute left-0 right-0 top-[128px] hidden w-full md:block"
             height="16"
             preserveAspectRatio="none"
             viewBox="0 0 100 16"
@@ -82,13 +82,13 @@ export function Process() {
                 }}
               >
                 <TiltCard strength={8}>
-                  <div className="relative flex h-44 items-center justify-center">
+                  <div className="relative flex h-56 items-center justify-center md:h-64">
                     <Image
                       src={step.image}
                       alt=""
-                      width={120}
-                      height={120}
-                      className="h-24 w-24 object-contain transition-transform duration-500 group-hover:scale-110 md:h-28 md:w-28"
+                      width={220}
+                      height={220}
+                      className="h-32 w-32 object-contain transition-transform duration-500 group-hover:scale-110 md:h-44 md:w-44"
                     />
                     <motion.span
                       initial={{ scale: 0, opacity: 0 }}
@@ -113,10 +113,7 @@ export function Process() {
                   {step.title}
                 </h3>
                 {i < PROCESS_STEPS.length - 1 && (
-                  <ArrowRight
-                    weight="bold"
-                    className="hidden size-4 text-accent opacity-0 transition-opacity duration-300 group-hover:opacity-100 md:block"
-                  />
+                  <ArrowRightOutlined className="hidden [&>svg]:size-4 text-accent opacity-0 transition-opacity duration-300 group-hover:opacity-100 md:block" />
                 )}
               </div>
               <p className="mt-2.5 text-sm leading-relaxed text-muted">{step.body}</p>

@@ -1,9 +1,8 @@
 import type { Metadata } from "next";
-import { MapPin, Phone } from "@phosphor-icons/react/dist/ssr";
 import { PageHero } from "@/components/layout/PageHero";
 import { ContactForm } from "@/components/forms/ContactForm";
+import { OfficesList } from "@/components/sections/OfficesList";
 import { Reveal } from "@/components/motion/Reveal";
-import { OFFICES } from "@/lib/content";
 
 export const metadata: Metadata = {
   title: "Contact Us",
@@ -27,24 +26,7 @@ export default function ContactPage() {
           </Reveal>
 
           <Reveal delay={0.08}>
-            <div className="flex flex-col gap-8">
-              {OFFICES.map((office) => (
-                <div key={office.country} className="border-t border-line pt-6 first:border-t-0 first:pt-0">
-                  <h3 className="text-lg font-medium tracking-tight text-ink">{office.country}</h3>
-                  <p className="mt-3 flex items-start gap-2.5 text-sm leading-relaxed text-muted">
-                    <MapPin weight="light" className="mt-0.5 size-4 shrink-0 text-accent" />
-                    {office.address}
-                  </p>
-                  <a
-                    href={`tel:${office.phoneHref}`}
-                    className="mt-2 flex items-center gap-2.5 text-sm text-ink/80 hover:text-ink"
-                  >
-                    <Phone weight="light" className="size-4 shrink-0 text-accent" />
-                    {office.phone}
-                  </a>
-                </div>
-              ))}
-            </div>
+            <OfficesList />
           </Reveal>
         </div>
       </section>

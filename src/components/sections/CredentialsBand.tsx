@@ -1,24 +1,26 @@
+"use client";
+
 import {
-  Certificate,
-  ShieldCheck,
-  Bank,
-  Buildings,
-  UsersThree,
-  GearSix,
-} from "@phosphor-icons/react/dist/ssr";
-import type { Icon } from "@phosphor-icons/react";
+  SafetyCertificateOutlined,
+  SafetyOutlined,
+  BankOutlined,
+  ApartmentOutlined,
+  TeamOutlined,
+  SettingOutlined,
+} from "@ant-design/icons";
+import type { ComponentType } from "react";
 import { CREDENTIALS } from "@/lib/content";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Reveal } from "@/components/motion/Reveal";
 import { SpotlightCard } from "@/components/ui/SpotlightCard";
 
-const ICONS: Record<string, Icon> = {
-  Certificate,
-  ShieldCheck,
-  Bank,
-  Buildings,
-  UsersThree,
-  GearSix,
+const ICONS: Record<string, ComponentType<{ className?: string }>> = {
+  Certificate: SafetyCertificateOutlined,
+  ShieldCheck: SafetyOutlined,
+  Bank: BankOutlined,
+  Buildings: ApartmentOutlined,
+  UsersThree: TeamOutlined,
+  GearSix: SettingOutlined,
 };
 
 export function CredentialsBand() {
@@ -37,7 +39,7 @@ export function CredentialsBand() {
             return (
               <Reveal key={item.title} delay={(i % 3) * 0.06}>
                 <SpotlightCard className="flex h-full flex-col gap-4 rounded-2xl border border-line bg-paper p-6 transition-all duration-300 hover:-translate-y-1 hover:border-ink/30 hover:shadow-[0_20px_40px_-24px_rgba(20,20,20,0.25)]">
-                  <IconCmp weight="light" className="size-7 text-accent" />
+                  <IconCmp className="[&>svg]:size-7 text-accent" />
                   <div>
                     <h3 className="text-base font-medium tracking-tight text-ink">
                       {item.title}

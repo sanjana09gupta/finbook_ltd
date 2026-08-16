@@ -1,10 +1,9 @@
 "use client";
 
 import { motion, useReducedMotion, type Variants } from "motion/react";
-import { PiggyBank, UsersThree, ClockCountdown } from "@phosphor-icons/react/dist/ssr";
+import { MoneyCollectOutlined, TeamOutlined, ClockCircleOutlined } from "@ant-design/icons";
 import { Button } from "@/components/ui/Button";
 import { Hero3D } from "@/components/three/Hero3D";
-import { Marquee } from "@/components/ui/Marquee";
 import { Highlight } from "@/components/ui/Highlight";
 import { FloatingBadge } from "@/components/ui/FloatingBadge";
 import { CONTACT_CTA } from "@/lib/content";
@@ -27,21 +26,19 @@ const word: Variants = {
   },
 };
 
-const MARQUEE_ITEMS = [
-  "Bookkeeping",
-  "Taxation",
-  "CFO Advisory",
-  "Reporting",
-  "Compliance",
-  "Payroll",
-];
-
 export function Hero() {
   const reduce = useReducedMotion();
 
   return (
     <>
       <section className="relative flex min-h-[calc(100dvh-72px)] items-center overflow-hidden border-b border-line">
+        <div className="absolute inset-0">
+          <Hero3D />
+        </div>
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-0 bg-gradient-to-r from-paper via-paper/75 to-paper/10"
+        />
         <div
           aria-hidden
           className="pointer-events-none absolute -left-32 top-1/4 size-96 rounded-full bg-accent/[0.06] blur-[120px]"
@@ -103,14 +100,14 @@ export function Hero() {
 
             <div className="mt-10 flex gap-3 overflow-x-auto pb-2 lg:hidden">
               <FloatingBadge
-                icon={<PiggyBank weight="bold" className="size-4" />}
+                icon={<MoneyCollectOutlined className="[&>svg]:size-4" />}
                 value="40-50%"
                 label="Lower cost"
                 delay={0.8}
                 className="shrink-0"
               />
               <FloatingBadge
-                icon={<UsersThree weight="bold" className="size-4" />}
+                icon={<TeamOutlined className="[&>svg]:size-4" />}
                 value="5 CAs"
                 label="Lead every account"
                 delay={0.88}
@@ -120,13 +117,10 @@ export function Hero() {
           </div>
 
           <div className="relative hidden lg:block">
-            <div className="relative aspect-[4/5] overflow-hidden rounded-3xl border border-line bg-paper-dim shadow-[0_40px_80px_-32px_rgba(20,20,20,0.35)]">
-              <Hero3D />
-              <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-paper-dim/60 via-transparent to-transparent" />
-            </div>
+            <div className="relative aspect-[4/5]" />
 
             <FloatingBadge
-              icon={<PiggyBank weight="bold" className="size-5" />}
+              icon={<MoneyCollectOutlined className="[&>svg]:size-5" />}
               value="40-50%"
               label="Lower cost than in-house"
               delay={0.85}
@@ -134,7 +128,7 @@ export function Hero() {
               className="absolute -left-8 -top-6"
             />
             <FloatingBadge
-              icon={<UsersThree weight="bold" className="size-5" />}
+              icon={<TeamOutlined className="[&>svg]:size-5" />}
               value="5"
               label="Chartered accountants"
               delay={0.95}
@@ -142,7 +136,7 @@ export function Hero() {
               className="absolute -bottom-6 -right-6"
             />
             <FloatingBadge
-              icon={<ClockCountdown weight="bold" className="size-5" />}
+              icon={<ClockCircleOutlined className="[&>svg]:size-5" />}
               value="Real-time"
               label="Reports, always current"
               delay={1.05}
@@ -152,10 +146,6 @@ export function Hero() {
           </div>
         </div>
       </section>
-
-      <div className="border-b border-line bg-paper-dim/50 py-4">
-        <Marquee items={MARQUEE_ITEMS} />
-      </div>
     </>
   );
 }

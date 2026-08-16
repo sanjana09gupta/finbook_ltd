@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useRef } from "react";
+import { useEffect, useMemo, useRef } from "react";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import * as THREE from "three";
 
@@ -97,6 +97,16 @@ function Rig() {
 }
 
 export function LedgerGrid() {
+  // Canvas is mounted via a dynamic (ssr:false) import, so R3F's own
+  // ResizeObserver sometimes takes its first measurement before this
+  // container's real layout has settled and never re-fires, leaving the
+  // drawing buffer stuck at the browser's 300x150 canvas default. Nudging a
+  // window resize shortly after mount forces R3F to re-measure correctly.
+  useEffect(() => {
+    const id = window.setTimeout(() => window.dispatchEvent(new Event("resize")), 300);
+    return () => window.clearTimeout(id);
+  }, []);
+
   return (
     <Canvas
       dpr={[1, 1.75]}

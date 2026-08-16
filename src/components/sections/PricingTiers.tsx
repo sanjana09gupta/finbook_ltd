@@ -1,6 +1,6 @@
 "use client";
 
-import { Check } from "@phosphor-icons/react/dist/ssr";
+import { CheckOutlined } from "@ant-design/icons";
 import { motion, useReducedMotion } from "motion/react";
 import { PLANS, CONTACT_CTA } from "@/lib/content";
 import { SectionHeading } from "@/components/ui/SectionHeading";
@@ -57,7 +57,7 @@ export function PricingTiers() {
                 <ul className="mt-7 flex flex-1 flex-col gap-3">
                   {plan.features.map((feature) => (
                     <li key={feature} className="flex items-start gap-2.5 text-sm">
-                      <Check weight="bold" className="mt-0.5 size-4 shrink-0 text-accent" />
+                      <CheckOutlined className="mt-0.5 [&>svg]:size-4 shrink-0 text-accent" />
                       <span className={plan.featured ? "text-paper/85" : "text-ink/80"}>
                         {feature}
                       </span>

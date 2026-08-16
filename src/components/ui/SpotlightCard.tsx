@@ -7,9 +7,17 @@ type SpotlightCardProps = {
   children: ReactNode;
   className?: string;
   spotlightClassName?: string;
+  radius?: number;
+  intensity?: number;
 };
 
-export function SpotlightCard({ children, className, spotlightClassName }: SpotlightCardProps) {
+export function SpotlightCard({
+  children,
+  className,
+  spotlightClassName,
+  radius = 240,
+  intensity = 0.14,
+}: SpotlightCardProps) {
   const ref = useRef<HTMLDivElement>(null);
 
   function handleMouseMove(e: React.MouseEvent<HTMLDivElement>) {
@@ -33,8 +41,7 @@ export function SpotlightCard({ children, className, spotlightClassName }: Spotl
           spotlightClassName,
         )}
         style={{
-          background:
-            "radial-gradient(240px circle at var(--spotlight-x, 50%) var(--spotlight-y, 50%), rgba(218,36,13,0.14), transparent 70%)",
+          background: `radial-gradient(${radius}px circle at var(--spotlight-x, 50%) var(--spotlight-y, 50%), rgba(218,36,13,${intensity}), transparent 70%)`,
         }}
       />
       {children}

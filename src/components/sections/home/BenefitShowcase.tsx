@@ -1,35 +1,36 @@
 "use client";
 
-import { PiggyBank, UsersThree, ClockCountdown } from "@phosphor-icons/react/dist/ssr";
-import type { Icon } from "@phosphor-icons/react";
+import { useRef } from "react";
+import { MoneyCollectOutlined, TeamOutlined, ClockCircleOutlined } from "@ant-design/icons";
+import type { ComponentType } from "react";
 import { motion, useReducedMotion } from "motion/react";
 import { Reveal } from "@/components/motion/Reveal";
 import { Highlight } from "@/components/ui/Highlight";
 import { cn } from "@/lib/cn";
 
 const BENEFITS: {
-  icon: Icon;
+  icon: ComponentType<{ className?: string }>;
   value: string;
   title: string;
   body: string;
   span: string;
 }[] = [
   {
-    icon: PiggyBank,
+    icon: MoneyCollectOutlined,
     value: "40-50%",
     title: "Lower cost, same expertise",
     body: "You get chartered-accountant-level work for less than half the cost of an in-house hire, benefits and overhead included.",
     span: "lg:col-span-1 lg:row-span-2",
   },
   {
-    icon: UsersThree,
+    icon: TeamOutlined,
     value: "5",
     title: "Chartered accountants, not a call center",
     body: "Every engagement is led by a qualified CA who knows your business, not a rotating support queue.",
     span: "lg:col-span-2 lg:row-span-1",
   },
   {
-    icon: ClockCountdown,
+    icon: ClockCircleOutlined,
     value: "Real-time",
     title: "Numbers that are never stale",
     body: "Reports and reconciliation update as transactions happen, not once a quarter.",
@@ -39,9 +40,30 @@ const BENEFITS: {
 
 export function BenefitShowcase() {
   const reduce = useReducedMotion();
+  const sectionRef = useRef<HTMLElement>(null);
+
+  function handleMouseMove(e: React.MouseEvent<HTMLElement>) {
+    const el = sectionRef.current;
+    if (!el) return;
+    const rect = el.getBoundingClientRect();
+    el.style.setProperty("--spotlight-x", `${e.clientX - rect.left}px`);
+    el.style.setProperty("--spotlight-y", `${e.clientY - rect.top}px`);
+  }
 
   return (
-    <section className="relative overflow-hidden bg-ink py-20 md:py-28">
+    <section
+      ref={sectionRef}
+      onMouseMove={handleMouseMove}
+      className="group relative overflow-hidden bg-ink bg-grid-dark py-20 md:py-28"
+    >
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100"
+        style={{
+          background:
+            "radial-gradient(560px circle at var(--spotlight-x, 50%) var(--spotlight-y, 50%), rgba(218,36,13,0.16), transparent 70%)",
+        }}
+      />
       <motion.div
         aria-hidden
         className="pointer-events-none absolute -right-40 -top-40 size-[28rem] rounded-full bg-accent/[0.12] blur-[140px]"
@@ -78,10 +100,7 @@ export function BenefitShowcase() {
                     tall ? "gap-10" : "sm:flex-row sm:items-center sm:gap-8",
                   )}
                 >
-                  <IconCmp
-                    weight="light"
-                    className="size-9 shrink-0 text-accent transition-transform duration-300 group-hover:scale-110"
-                  />
+                  <IconCmp className="[&>svg]:size-9 shrink-0 text-accent transition-transform duration-300 group-hover:scale-110" />
                   <div className={tall ? "" : "flex-1"}>
                     <p
                       className={cn(

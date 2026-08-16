@@ -1,6 +1,6 @@
 "use client";
 
-import { Check, X } from "@phosphor-icons/react/dist/ssr";
+import { CheckOutlined, CloseOutlined } from "@ant-design/icons";
 import { motion } from "motion/react";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Reveal } from "@/components/motion/Reveal";
@@ -23,10 +23,14 @@ function Cell({ value, tone }: { value: string | boolean; tone: "muted" | "accen
         viewport={{ once: true }}
         transition={{ type: "spring", stiffness: 400, damping: 18 }}
       >
-        <Check weight="bold" className={tone === "accent" ? "size-4 text-accent" : "size-4 text-ink/60"} />
+        <CheckOutlined
+          className={
+            tone === "accent" ? "[&>svg]:size-4 text-accent" : "[&>svg]:size-4 text-ink/60"
+          }
+        />
       </motion.span>
     ) : (
-      <X weight="bold" className="size-4 text-ink/20" />
+      <CloseOutlined className="[&>svg]:size-4 text-ink/20" />
     );
   }
   return <>{value}</>;

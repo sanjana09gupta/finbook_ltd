@@ -4,7 +4,7 @@ import Link from "next/link";
 import type { ReactNode } from "react";
 import { useRef } from "react";
 import { motion, useMotionValue, useSpring, useReducedMotion } from "motion/react";
-import { ArrowUpRight } from "@phosphor-icons/react/dist/ssr";
+import { ArrowUpOutlined } from "@ant-design/icons";
 import { cn } from "@/lib/cn";
 
 type ButtonProps = {
@@ -60,10 +60,7 @@ export function Button({ href, children, variant = "primary", className, showArr
       >
         {children}
         {showArrow && (
-          <ArrowUpRight
-            weight="bold"
-            className="size-4 shrink-0 transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1"
-          />
+          <ArrowUpOutlined className="[&>svg]:size-4 shrink-0 rotate-45 transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1" />
         )}
       </Link>
     </motion.div>

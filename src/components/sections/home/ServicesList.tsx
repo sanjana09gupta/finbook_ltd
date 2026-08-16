@@ -1,12 +1,23 @@
+"use client";
+
 import Link from "next/link";
-import { Books, ChartLineUp, Certificate, ArrowRight } from "@phosphor-icons/react/dist/ssr";
-import type { Icon } from "@phosphor-icons/react";
+import {
+  BookOutlined,
+  LineChartOutlined,
+  SafetyCertificateOutlined,
+  ArrowRightOutlined,
+} from "@ant-design/icons";
+import type { ComponentType } from "react";
 import { SERVICES } from "@/lib/content";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Reveal } from "@/components/motion/Reveal";
 import { Highlight } from "@/components/ui/Highlight";
 
-const ICONS: Record<string, Icon> = { Books, ChartLineUp, Certificate };
+const ICONS: Record<string, ComponentType<{ className?: string }>> = {
+  Books: BookOutlined,
+  ChartLineUp: LineChartOutlined,
+  Certificate: SafetyCertificateOutlined,
+};
 
 export function ServicesList() {
   return (
@@ -36,10 +47,7 @@ export function ServicesList() {
                   <span className="hidden font-mono text-sm text-ink/25 transition-colors duration-300 group-hover:text-paper/40 md:block">
                     0{i + 1}
                   </span>
-                  <IconCmp
-                    weight="light"
-                    className="hidden size-9 shrink-0 text-accent transition-transform duration-300 group-hover:scale-110 md:block"
-                  />
+                  <IconCmp className="hidden [&>svg]:size-9 shrink-0 text-accent transition-transform duration-300 group-hover:scale-110 md:block" />
                   <div>
                     <h3 className="text-xl font-medium tracking-tight text-ink transition-colors duration-300 group-hover:text-paper md:text-2xl">
                       {service.title}
@@ -51,10 +59,7 @@ export function ServicesList() {
                   <span className="hidden text-sm text-muted transition-colors duration-300 group-hover:text-paper/60 lg:block">
                     Learn more
                   </span>
-                  <ArrowRight
-                    weight="bold"
-                    className="size-5 shrink-0 text-ink/40 transition-all duration-300 group-hover:translate-x-1 group-hover:text-accent"
-                  />
+                  <ArrowRightOutlined className="[&>svg]:size-5 shrink-0 text-ink/40 transition-all duration-300 group-hover:translate-x-1 group-hover:text-accent" />
                 </Link>
               </Reveal>
             );

@@ -1,5 +1,6 @@
 export const SITE = {
   name: "Finbook Global",
+  legalName: "A.R.M Finbook Global Private Limited",
   tagline: "Finance, off your plate.",
   description:
     "Outsourced bookkeeping, taxation, and CFO services for small and growing businesses in the USA and UK, run by chartered accountants in Kochi, India.",
@@ -27,13 +28,14 @@ export const NAV_LINKS = [
 export const OFFICES = [
   {
     country: "India",
-    address: "2nd Floor, KAP Sons Building, 521/3, Toll Junction, Edappally, Kochi, Kerala 682024",
+    address:
+      "2nd Floor, KAP Sons Building, 521/3, near Aster Labs, Toll Junction, Edappally, Kochi, Ernakulam, Kerala 682024",
     phone: "+91 871 411 1851",
     phoneHref: "+918714111851",
   },
   {
-    country: "United Kingdom",
-    address: "2nd Floor, 31-41 Worship Street, London EC2A 2DX",
+    country: "United Kingdom (Headquarters)",
+    address: "2nd Floor, 31-41 Worship Street, London, United Kingdom, EC2A 2DX",
     phone: "+44 7539 226151",
     phoneHref: "+447539226151",
   },
@@ -42,6 +44,15 @@ export const OFFICES = [
     address: "Remote client support across all US time zones",
     phone: "+1 315 888 9950",
     phoneHref: "+13158889950",
+  },
+] as const;
+
+export const MAP_LOCATIONS = [
+  {
+    label: "London — Headquarters",
+    address: "2nd Floor, 31-41 Worship Street, London, United Kingdom, EC2A 2DX",
+    lat: 51.5221333,
+    lng: -0.0856327,
   },
 ] as const;
 

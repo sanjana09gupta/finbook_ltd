@@ -79,6 +79,14 @@
     animation-timing-function: linear;
     animation-iteration-count: infinite;
   }
+
+  .bg-grid-dark {
+    background-image:
+      linear-gradient(to right, rgba(250, 250, 248, 0.11) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(250, 250, 248, 0.11) 1px, transparent 1px);
+    background-size: 44px 44px;
+    background-position: center top;
+  }
 }
 
 @keyframes marquee {

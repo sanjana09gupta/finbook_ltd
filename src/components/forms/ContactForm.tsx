@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, type FormEvent } from "react";
-import { CheckCircle } from "@phosphor-icons/react/dist/ssr";
+import { CheckCircleFilled } from "@ant-design/icons";
 import { SITE } from "@/lib/content";
 
 type Errors = Partial<Record<"name" | "email" | "message", string>>;
@@ -35,7 +35,7 @@ export function ContactForm() {
   if (sent) {
     return (
       <div className="flex flex-col items-start gap-3 rounded-2xl border border-line bg-paper-dim p-8">
-        <CheckCircle weight="fill" className="size-8 text-accent" />
+        <CheckCircleFilled className="[&>svg]:size-8 text-accent" />
         <h3 className="text-lg font-medium text-ink">Your email client should be open</h3>
         <p className="text-sm leading-relaxed text-muted">
           If it didn&apos;t open automatically, write to us directly at{" "}

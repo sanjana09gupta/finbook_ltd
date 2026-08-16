@@ -1,5 +1,6 @@
 "use client";
 
+import { useRef } from "react";
 import { motion, useReducedMotion } from "motion/react";
 import { Button } from "@/components/ui/Button";
 import { Reveal } from "@/components/motion/Reveal";
@@ -15,9 +16,30 @@ export function CtaBand({
   body = "A short call is enough to tell you whether Finbook is the right fit, no obligation, no sales script.",
 }: CtaBandProps) {
   const reduce = useReducedMotion();
+  const sectionRef = useRef<HTMLElement>(null);
+
+  function handleMouseMove(e: React.MouseEvent<HTMLElement>) {
+    const el = sectionRef.current;
+    if (!el) return;
+    const rect = el.getBoundingClientRect();
+    el.style.setProperty("--spotlight-x", `${e.clientX - rect.left}px`);
+    el.style.setProperty("--spotlight-y", `${e.clientY - rect.top}px`);
+  }
 
   return (
-    <section className="relative overflow-hidden bg-ink">
+    <section
+      ref={sectionRef}
+      onMouseMove={handleMouseMove}
+      className="group relative overflow-hidden bg-ink bg-grid-dark"
+    >
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100"
+        style={{
+          background:
+            "radial-gradient(560px circle at var(--spotlight-x, 50%) var(--spotlight-y, 50%), rgba(218,36,13,0.16), transparent 70%)",
+        }}
+      />
       <motion.div
         aria-hidden
         className="pointer-events-none absolute left-1/2 top-1/2 h-[420px] w-[620px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-accent/20 blur-[120px]"
@@ -25,7 +47,7 @@ export function CtaBand({
         transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
       />
 
-      <div className="container-page relative py-20 text-center md:py-28">
+      <div className="container-page relative py-14 text-center md:py-20">
         <Reveal>
           <h2 className="mx-auto max-w-2xl text-balance text-3xl font-medium tracking-tight text-paper md:text-5xl">
             {title}

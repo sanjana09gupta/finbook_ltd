@@ -5,10 +5,12 @@ import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
-import { List, X, CaretDown } from "@phosphor-icons/react/dist/ssr";
-import { NAV_LINKS, CONTACT_CTA } from "@/lib/content";
+import { MenuOutlined, CloseOutlined, CaretDownOutlined } from "@ant-design/icons";
+import { NAV_LINKS } from "@/lib/content";
 import { Button } from "@/components/ui/Button";
 import { cn } from "@/lib/cn";
+
+const HEADER_LINKS = NAV_LINKS.filter((link) => link.href !== "/contact-us");
 
 export function Header() {
   const [open, setOpen] = useState(false);
@@ -26,10 +28,10 @@ export function Header() {
         <Link href="/" className="flex items-center gap-2" onClick={() => setOpen(false)}>
           <motion.div whileHover={{ rotate: -4, scale: 1.03 }} transition={{ type: "spring", stiffness: 300, damping: 15 }}>
             <Image
-              src="/images/logo.svg"
-              alt="Finbook Global"
-              width={128}
-              height={49}
+              src="/images/finbook-ltd-logo-header.png"
+              alt="Finbook Ltd"
+              width={2150}
+              height={833}
               className="h-9 w-auto md:h-10"
               priority
             />
@@ -40,7 +42,7 @@ export function Header() {
           className="hidden items-center gap-8 lg:flex"
           onMouseLeave={() => setHovered(null)}
         >
-          {NAV_LINKS.map((link) => {
+          {HEADER_LINKS.map((link) => {
             const active = (hovered ?? "") === link.href || (!hovered && isActive(link.href));
             return (
               <div
@@ -57,7 +59,7 @@ export function Header() {
                 >
                   {link.label}
                   {"children" in link && link.children && (
-                    <CaretDown weight="bold" className="size-3 opacity-50" />
+                    <CaretDownOutlined className="[&>svg]:size-3 opacity-50" />
                   )}
                   {active && (
                     <motion.span
@@ -90,7 +92,7 @@ export function Header() {
 
         <div className="hidden lg:block">
           <Button href="/contact-us" className="text-xs">
-            {CONTACT_CTA}
+            Contact
           </Button>
         </div>
 
@@ -100,7 +102,7 @@ export function Header() {
           className="flex size-10 items-center justify-center rounded-full border border-line lg:hidden"
           onClick={() => setOpen((v) => !v)}
         >
-          {open ? <X className="size-5" /> : <List className="size-5" />}
+          {open ? <CloseOutlined className="[&>svg]:size-5" /> : <MenuOutlined className="[&>svg]:size-5" />}
         </button>
       </div>
 
@@ -119,7 +121,7 @@ export function Header() {
               animate="show"
               variants={{ show: { transition: { staggerChildren: 0.05 } } }}
             >
-              {NAV_LINKS.map((link) => (
+              {HEADER_LINKS.map((link) => (
                 <motion.div
                   key={link.href}
                   variants={{
@@ -151,7 +153,7 @@ export function Header() {
                 </motion.div>
               ))}
               <Button href="/contact-us" className="mt-3 w-fit">
-                {CONTACT_CTA}
+                Contact
               </Button>
             </motion.nav>
           </motion.div>
