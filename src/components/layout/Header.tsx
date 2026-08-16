@@ -3,7 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import { MenuOutlined, CloseOutlined, CaretDownOutlined } from "@ant-design/icons";
 import { NAV_LINKS } from "@/lib/content";
@@ -16,14 +16,43 @@ export function Header() {
   const [open, setOpen] = useState(false);
   const [hovered, setHovered] = useState<string | null>(null);
   const pathname = usePathname();
+  const headerRef = useRef<HTMLElement>(null);
 
   function isActive(href: string) {
     if (href === "/") return pathname === "/";
     return pathname.startsWith(href.split("/").slice(0, 2).join("/"));
   }
 
+  // Close the mobile menu on scroll or on any click/tap outside it, since
+  // it's an inline panel (not a scroll-locked overlay) -- it should get out
+  // of the way as soon as the user starts reading the page again.
+  useEffect(() => {
+    if (!open) return;
+
+    function handleScroll() {
+      setOpen(false);
+    }
+
+    function handleOutside(e: PointerEvent) {
+      if (headerRef.current && !headerRef.current.contains(e.target as Node)) {
+        setOpen(false);
+      }
+    }
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    document.addEventListener("pointerdown", handleOutside);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      document.removeEventListener("pointerdown", handleOutside);
+    };
+  }, [open]);
+
   return (
-    <header className="sticky top-0 z-50 border-b border-line/70 bg-paper/85 backdrop-blur-md">
+    <header
+      ref={headerRef}
+      className="sticky top-0 z-50 border-b border-line/70 bg-paper/85 backdrop-blur-md"
+    >
       <div className="container-page flex h-16 items-center justify-between md:h-[72px]">
         <Link href="/" className="flex items-center gap-2" onClick={() => setOpen(false)}>
           <motion.div whileHover={{ rotate: -4, scale: 1.03 }} transition={{ type: "spring", stiffness: 300, damping: 15 }}>
