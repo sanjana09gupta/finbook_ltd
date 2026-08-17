@@ -96,7 +96,7 @@ export function BenefitShowcase() {
               >
                 <div
                   className={cn(
-                    "flex h-full flex-col justify-between rounded-2xl border border-paper/25 bg-paper/[0.07] p-8 transition-colors duration-300 hover:border-accent/50 hover:bg-paper/[0.1]",
+                    "flex h-full flex-col justify-between rounded-2xl border border-paper/25 bg-ink-soft p-8 transition-all duration-300 hover:border-accent/50 hover:brightness-110",
                     tall ? "gap-10" : "sm:flex-row sm:items-center sm:gap-8",
                   )}
                 >
