@@ -54,7 +54,7 @@ export function BenefitShowcase() {
     <section
       ref={sectionRef}
       onMouseMove={handleMouseMove}
-      className="group relative overflow-hidden bg-ink bg-grid-dark py-20 md:py-28"
+      className="group relative overflow-hidden bg-ink bg-grid-dark py-14 md:py-20 lg:py-28"
     >
       <div
         aria-hidden
@@ -78,13 +78,13 @@ export function BenefitShowcase() {
           </span>
         </Reveal>
         <Reveal delay={0.05}>
-          <h2 className="max-w-2xl text-balance text-3xl font-medium leading-tight tracking-tight text-paper md:text-5xl">
+          <h2 className="max-w-2xl text-balance text-2xl font-medium leading-tight tracking-tight text-paper md:text-3xl lg:text-5xl">
             Three reasons growing businesses hand{" "}
             <Highlight>their books</Highlight> to Finbook.
           </h2>
         </Reveal>
 
-        <div className="mt-14 grid gap-4 lg:grid-cols-3 lg:grid-rows-2">
+        <div className="mt-8 grid gap-3 md:mt-14 md:gap-4 lg:grid-cols-3 lg:grid-rows-2">
           {BENEFITS.map((item, i) => {
             const IconCmp = item.icon;
             const tall = i === 0;
@@ -96,24 +96,24 @@ export function BenefitShowcase() {
               >
                 <div
                   className={cn(
-                    "flex bg-white text-black h-full flex-col justify-between rounded-2xl border border-paper/25 bg-ink-soft p-8 transition-all duration-300 hover:border-accent/50 hover:brightness-110",
-                    tall ? "gap-10" : "sm:flex-row sm:items-center sm:gap-8",
+                    "flex h-full flex-col justify-between rounded-2xl border border-paper/25 bg-white p-5 text-black transition-all duration-300 hover:border-accent/50 hover:brightness-110 md:p-8",
+                    tall ? "gap-5 md:gap-10" : "gap-5 sm:flex-row sm:items-center sm:gap-8",
                   )}
                 >
-                  <IconCmp className="[&>svg]:size-9 shrink-0 text-accent  transition-transform duration-300 group-hover:scale-110" />
-                  <div className={tall ? "" : "flex-1 "}>
+                  <IconCmp className="[&>svg]:size-7 md:[&>svg]:size-9 shrink-0 text-accent transition-transform duration-300 group-hover:scale-110" />
+                  <div className={tall ? "" : "flex-1"}>
                     <p
                       className={cn(
                         "font-mono font-medium tracking-tight text-black",
-                        tall ? "text-5xl md:text-6xl" : "text-4xl",
+                        tall ? "text-3xl md:text-5xl lg:text-6xl" : "text-2xl md:text-4xl",
                       )}
                     >
                       {item.value}
                     </p>
-                    <h3 className="mt-3 text-lg font-medium tracking-tight text-black">
+                    <h3 className="mt-2 text-base font-medium tracking-tight text-black md:mt-3 md:text-lg">
                       {item.title}
                     </h3>
-                    <p className="mt-2 max-w-md text-sm leading-relaxed text-black/60">
+                    <p className="mt-1.5 max-w-md text-sm leading-relaxed text-black/60 md:mt-2">
                       {item.body}
                     </p>
                   </div>
