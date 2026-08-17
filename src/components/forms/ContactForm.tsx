@@ -1,7 +1,10 @@
 "use client";
 
 import { useState, type FormEvent } from "react";
+import { AnimatePresence, motion } from "motion/react";
 import { CheckCircleFilled, LoadingOutlined } from "@ant-design/icons";
+import { IconCycler } from "@/components/ui/IconCycler";
+import { SYNC_TOOLS } from "@/lib/content";
 import { SlotPicker, type Slot } from "./SlotPicker";
 
 type Errors = Partial<Record<"name" | "email" | "message" | "slotStart" | "turnstileToken", string>>;
@@ -225,6 +228,21 @@ export function ContactForm() {
         {submitting && <LoadingOutlined className="[&>svg]:size-3.5 animate-spin" />}
         {submitting ? "Booking…" : "Book consultation"}
       </button>
+
+      <AnimatePresence>
+        {submitting && (
+          <motion.div
+            initial={{ opacity: 0, y: -6 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -6 }}
+            transition={{ duration: 0.25 }}
+            className="flex items-center gap-3"
+          >
+            <IconCycler tools={SYNC_TOOLS} size={32} intervalMs={900} />
+            <span className="text-xs text-muted">Adding this to your calendar…</span>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </form>
   );
 }

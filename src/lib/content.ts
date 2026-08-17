@@ -9,6 +9,12 @@ export const SITE = {
 
 export const CONTACT_CTA = "Talk to us";
 
+export const SYNC_TOOLS = [
+  { name: "Google Calendar", slug: "googlecalendar" },
+  { name: "Google Meet", slug: "googlemeet" },
+  { name: "Gmail", slug: "gmail" },
+] as const;
+
 export const NAV_LINKS = [
   { href: "/", label: "Home" },
   { href: "/about-us", label: "About" },
