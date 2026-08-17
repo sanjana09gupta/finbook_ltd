@@ -31,7 +31,7 @@ export function Hero() {
 
   return (
     <>
-      <section className="relative flex min-h-[calc(100dvh-72px)] items-center overflow-hidden border-b border-line">
+      <section className="relative flex items-center overflow-hidden border-b border-line lg:min-h-[calc(100dvh-72px)]">
         <div className="absolute inset-0">
           <Hero3D />
         </div>
