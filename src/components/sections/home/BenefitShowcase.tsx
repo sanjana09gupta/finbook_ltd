@@ -96,24 +96,24 @@ export function BenefitShowcase() {
               >
                 <div
                   className={cn(
-                    "flex h-full flex-col justify-between rounded-2xl border border-paper/25 bg-ink-soft p-8 transition-all duration-300 hover:border-accent/50 hover:brightness-110",
+                    "flex bg-white text-black h-full flex-col justify-between rounded-2xl border border-paper/25 bg-ink-soft p-8 transition-all duration-300 hover:border-accent/50 hover:brightness-110",
                     tall ? "gap-10" : "sm:flex-row sm:items-center sm:gap-8",
                   )}
                 >
-                  <IconCmp className="[&>svg]:size-9 shrink-0 text-accent transition-transform duration-300 group-hover:scale-110" />
-                  <div className={tall ? "" : "flex-1"}>
+                  <IconCmp className="[&>svg]:size-9 shrink-0 text-accent  transition-transform duration-300 group-hover:scale-110" />
+                  <div className={tall ? "" : "flex-1 "}>
                     <p
                       className={cn(
-                        "font-mono font-medium tracking-tight text-paper",
+                        "font-mono font-medium tracking-tight text-black",
                         tall ? "text-5xl md:text-6xl" : "text-4xl",
                       )}
                     >
                       {item.value}
                     </p>
-                    <h3 className="mt-3 text-lg font-medium tracking-tight text-paper">
+                    <h3 className="mt-3 text-lg font-medium tracking-tight text-black">
                       {item.title}
                     </h3>
-                    <p className="mt-2 max-w-md text-sm leading-relaxed text-paper/60">
+                    <p className="mt-2 max-w-md text-sm leading-relaxed text-black/60">
                       {item.body}
                     </p>
                   </div>

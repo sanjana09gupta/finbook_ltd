@@ -20,7 +20,12 @@ export function Highlight({ children, className, tone = "accent", delay = 0.3 }:
     // parent can fragment across line boxes, and browsers then size the
     // absolutely positioned child against just one fragment -- this is what
     // was producing the ~5px sliver instead of a box spanning the text.
-    <span className={cn("relative inline-block", className)}>
+    // whitespace-nowrap: an inline-block with auto width still wraps its
+    // OWN text internally when it doesn't fit the remaining line -- turning
+    // it into a two-line box whose auto width collapses to a sliver at the
+    // wrap point. Forcing nowrap keeps the highlighted phrase as a single
+    // atomic unit that moves to the next line whole, never splits mid-phrase.
+    <span className={cn("relative inline-block whitespace-nowrap", className)}>
       {/* Pure opacity fade, deliberately not a scaleX sweep, as extra
           insurance: an interrupted scaleX-from-0 animation also renders as
           a thin colored sliver, which an opacity-only transition can't
