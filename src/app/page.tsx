@@ -4,6 +4,7 @@ import { Process } from "@/components/sections/home/Process";
 import { WhyFinbookGrid } from "@/components/sections/WhyFinbookGrid";
 import { ServicesList } from "@/components/sections/home/ServicesList";
 import { TeamTeaser } from "@/components/sections/home/TeamTeaser";
+import { Testimonials } from "@/components/sections/home/Testimonials";
 import { CtaBand } from "@/components/sections/CtaBand";
 
 export default function Home() {
@@ -15,6 +16,7 @@ export default function Home() {
       <WhyFinbookGrid />
       <ServicesList />
       <TeamTeaser />
+      <Testimonials />
       <CtaBand />
     </>
   );
