@@ -21,7 +21,7 @@ export default function ContactPage() {
         body="Send a short note about your business and one of our accountants will get back to you within a business day."
       />
 
-      <section className="py-20 md:py-28">
+      <section className="pb-16 pt-4 md:pb-20 md:pt-6">
         <div className="container-page grid gap-16 lg:grid-cols-[1.1fr_0.9fr] lg:gap-24">
           <Reveal>
             <ContactForm />
