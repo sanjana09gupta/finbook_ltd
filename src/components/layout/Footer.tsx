@@ -9,9 +9,10 @@ import {
   LinkedinFilled,
   MailOutlined,
 } from "@ant-design/icons";
-import { NAV_LINKS, OFFICES, SITE } from "@/lib/content";
+import { MAP_LOCATIONS, NAV_LINKS, OFFICES, SITE } from "@/lib/content";
 
 const OFFICE_LABELS = ["India", "UK", "USA"] as const;
+const HEADQUARTERS = MAP_LOCATIONS[0];
 
 export function Footer() {
   const footerRef = useRef<HTMLElement>(null);
@@ -65,7 +66,7 @@ export function Footer() {
           className={
             isContactPage
               ? "mt-4"
-              : "mt-6 grid gap-6 md:grid-cols-[1.1fr_0.9fr] md:gap-12"
+              : "mt-6 grid gap-6 md:grid-cols-[0.8fr_1.2fr] md:gap-10"
           }
         >
           <div>
@@ -103,54 +104,83 @@ export function Footer() {
             </div>
           </div>
 
-          {!isContactPage && <section aria-labelledby="footer-offices">
-            <h2 id="footer-offices" className="text-[10px] font-medium uppercase tracking-[0.18em] text-paper/45">
-              Select an office
-            </h2>
-            <div className="mt-3 flex gap-2">
-              {OFFICES.map((office, index) => {
-                const active = activeOffice === index;
-                return (
-                  <button
-                    key={office.country}
-                    type="button"
-                    aria-expanded={active}
-                    aria-pressed={active}
-                    aria-controls="footer-office-details"
-                    onClick={() => toggleOffice(index)}
-                    className={`flex items-center gap-1.5 rounded-md border px-3 py-2 text-xs transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-teal ${
-                      active
-                        ? "border-teal bg-teal text-ink"
-                        : "border-paper/20 text-paper/65 hover:border-teal hover:text-teal"
-                    }`}
-                  >
-                    <EnvironmentOutlined className="[&>svg]:size-3.5" />
-                    {OFFICE_LABELS[index] ?? office.country}
-                  </button>
-                );
-              })}
-            </div>
+          {!isContactPage && (
+            <div className="grid gap-5 lg:grid-cols-[minmax(0,1fr)_minmax(16rem,20rem)]">
+              <section aria-labelledby="footer-offices">
+                <h2 id="footer-offices" className="text-[10px] font-medium uppercase tracking-[0.18em] text-paper/45">
+                  Select an office
+                </h2>
+                <div className="mt-3 flex gap-2">
+                  {OFFICES.map((office, index) => {
+                    const active = activeOffice === index;
+                    return (
+                      <button
+                        key={office.country}
+                        type="button"
+                        aria-expanded={active}
+                        aria-pressed={active}
+                        aria-controls="footer-office-details"
+                        onClick={() => toggleOffice(index)}
+                        className={`flex items-center gap-1.5 rounded-md border px-3 py-2 text-xs transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-teal ${
+                          active
+                            ? "border-teal bg-teal text-ink"
+                            : "border-paper/20 text-paper/65 hover:border-teal hover:text-teal"
+                        }`}
+                      >
+                        <EnvironmentOutlined className="[&>svg]:size-3.5" />
+                        {OFFICE_LABELS[index] ?? office.country}
+                      </button>
+                    );
+                  })}
+                </div>
 
-            <div id="footer-office-details" aria-live="polite" className="min-h-16">
-              {selectedOffice && (
-                <div className="mt-3 border-l-2 border-teal pl-3 text-xs leading-relaxed text-paper/60">
+                <div id="footer-office-details" aria-live="polite" className="min-h-16">
+                  {selectedOffice && (
+                    <div className="mt-3 border-l-2 border-teal pl-3 text-xs leading-relaxed text-paper/60">
+                      <a
+                        href={`https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(
+                          selectedOffice.address,
+                        )}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="block max-w-md hover:text-paper"
+                      >
+                        {selectedOffice.address}
+                      </a>
+                      <a href={`tel:${selectedOffice.phoneHref}`} className="mt-1 inline-block text-teal hover:text-paper">
+                        {selectedOffice.phone}
+                      </a>
+                    </div>
+                  )}
+                </div>
+              </section>
+
+              <section aria-labelledby="footer-headquarters">
+                <div className="mb-2 flex items-center justify-between gap-3">
+                  <h2 id="footer-headquarters" className="text-[10px] font-medium uppercase tracking-[0.18em] text-paper/45">
+                    Headquarters
+                  </h2>
                   <a
-                    href={`https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(
-                      selectedOffice.address,
-                    )}`}
+                    href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(HEADQUARTERS.address)}`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="block max-w-md hover:text-paper"
+                    className="text-[10px] text-teal transition-colors hover:text-paper"
                   >
-                    {selectedOffice.address}
-                  </a>
-                  <a href={`tel:${selectedOffice.phoneHref}`} className="mt-1 inline-block text-teal hover:text-paper">
-                    {selectedOffice.phone}
+                    London, UK
                   </a>
                 </div>
-              )}
+                <div className="overflow-hidden rounded-md border border-paper/15 bg-paper/5">
+                  <iframe
+                    title="Finbook headquarters in London"
+                    src={`https://www.google.com/maps?q=${encodeURIComponent(HEADQUARTERS.address)}&output=embed`}
+                    loading="lazy"
+                    referrerPolicy="no-referrer-when-downgrade"
+                    className="h-36 w-full border-0 opacity-80 grayscale transition duration-300 hover:opacity-100 hover:grayscale-0"
+                  />
+                </div>
+              </section>
             </div>
-          </section>}
+          )}
         </div>
 
         <div className={`${isContactPage ? "mt-4" : "mt-5"} flex flex-col gap-2 border-t border-paper/10 pt-4 text-[10px] leading-relaxed text-paper/40 sm:flex-row sm:items-center sm:justify-between md:text-xs`}>
