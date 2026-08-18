@@ -23,15 +23,10 @@ export function Header() {
     return pathname.startsWith(href.split("/").slice(0, 2).join("/"));
   }
 
-  // Close the mobile menu on scroll or on any click/tap outside it, since
-  // it's an inline panel (not a scroll-locked overlay) -- it should get out
-  // of the way as soon as the user starts reading the page again.
+  // Keep the menu open while the page settles; close it only when the user
+  // clicks outside or presses Escape.
   useEffect(() => {
     if (!open) return;
-
-    function handleScroll() {
-      setOpen(false);
-    }
 
     function handleOutside(e: PointerEvent) {
       if (headerRef.current && !headerRef.current.contains(e.target as Node)) {
@@ -39,12 +34,16 @@ export function Header() {
       }
     }
 
-    window.addEventListener("scroll", handleScroll, { passive: true });
+    function handleKeyDown(e: KeyboardEvent) {
+      if (e.key === "Escape") setOpen(false);
+    }
+
     document.addEventListener("pointerdown", handleOutside);
+    document.addEventListener("keydown", handleKeyDown);
 
     return () => {
-      window.removeEventListener("scroll", handleScroll);
       document.removeEventListener("pointerdown", handleOutside);
+      document.removeEventListener("keydown", handleKeyDown);
     };
   }, [open]);
 
@@ -63,11 +62,11 @@ export function Header() {
         <Link href="/" className="flex items-center gap-2" onClick={() => setOpen(false)}>
           <motion.div whileHover={{ rotate: -4, scale: 1.03 }} transition={{ type: "spring", stiffness: 300, damping: 15 }}>
             <Image
-              src="/images/finbook-ltd-logo-white.png"
+              src="/images/finbook-ltd-logo-header.png"
               alt="Finbook Ltd"
               width={2150}
               height={833}
-              className="h-9 w-auto md:h-10"
+              className="h-9 w-auto brightness-0 invert md:h-11"
               priority
             />
           </motion.div>
@@ -134,6 +133,8 @@ export function Header() {
         <button
           type="button"
           aria-label={open ? "Close menu" : "Open menu"}
+          aria-controls="mobile-navigation"
+          aria-expanded={open}
           className="flex size-10 items-center justify-center rounded-md border border-paper/20 text-paper lg:hidden"
           onClick={() => setOpen((v) => !v)}
         >
@@ -144,11 +145,12 @@ export function Header() {
       <AnimatePresence>
         {open && (
           <motion.div
+            id="mobile-navigation"
             initial={{ height: 0, opacity: 0 }}
             animate={{ height: "auto", opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
             transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
-            className="overflow-hidden border-t border-paper/10 bg-ink lg:hidden"
+            className="absolute left-0 right-0 top-full max-h-[calc(100dvh-7rem)] overflow-y-auto border-t border-paper/10 bg-ink shadow-2xl lg:hidden"
           >
             <motion.nav
               className="container-page flex flex-col gap-1 py-4"

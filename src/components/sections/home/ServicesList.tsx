@@ -1,23 +1,14 @@
 "use client";
 
 import Link from "next/link";
-import {
-  BookOutlined,
-  LineChartOutlined,
-  SafetyCertificateOutlined,
-  ArrowRightOutlined,
-} from "@ant-design/icons";
-import type { ComponentType } from "react";
+import Image from "next/image";
+import { ArrowRightOutlined } from "@ant-design/icons";
 import { SERVICES } from "@/lib/content";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Reveal } from "@/components/motion/Reveal";
 import { Highlight } from "@/components/ui/Highlight";
 
-const ICONS: Record<string, ComponentType<{ className?: string }>> = {
-  Books: BookOutlined,
-  ChartLineUp: LineChartOutlined,
-  Certificate: SafetyCertificateOutlined,
-};
+const DISPLAY_SERVICES = [SERVICES[0], SERVICES[2], SERVICES[1]];
 
 export function ServicesList() {
   return (
@@ -26,40 +17,41 @@ export function ServicesList() {
         <SectionHeading
           title={
             <>
-              Three ways we plug into your <Highlight>finance function</Highlight>.
+              Our <Highlight>services</Highlight>.
             </>
           }
         />
 
-        <div className="mt-14 border-t border-line">
-          {SERVICES.map((service, i) => {
-            const IconCmp = ICONS[service.icon];
+        <div className="mt-12 grid gap-6 md:mt-14 md:grid-cols-3 md:gap-5 lg:gap-7">
+          {DISPLAY_SERVICES.map((service, i) => {
             return (
-              <Reveal key={service.slug} delay={i * 0.05}>
+              <Reveal key={service.slug} delay={i * 0.06} className="h-full">
                 <Link
                   href={`/services/${service.slug}`}
-                  className="group relative isolate grid items-center gap-4 overflow-hidden border-b border-line px-4 py-8 transition-colors duration-300 md:grid-cols-[auto_auto_1fr_auto_auto] md:gap-10 md:px-6"
+                  className="group flex h-full flex-col"
                 >
-                  <span
-                    aria-hidden
-                    className="absolute inset-0 -z-10 origin-left scale-x-0 bg-teal/20 transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-x-100"
-                  />
-                  <span className="hidden font-mono text-sm text-ink/30 transition-colors duration-300 group-hover:text-ink md:block">
-                    0{i + 1}
-                  </span>
-                  <IconCmp className="hidden [&>svg]:size-9 shrink-0 text-teal transition-transform duration-300 group-hover:scale-110 md:block" />
-                  <div>
-                    <h3 className="text-xl tracking-tight text-ink transition-colors duration-300 group-hover:text-ink md:text-2xl">
-                      {service.title}
-                    </h3>
-                    <p className="mt-1.5 max-w-lg text-sm leading-relaxed text-muted transition-colors duration-300 group-hover:text-ink/70">
-                      {service.short}
-                    </p>
+                  <div className="relative aspect-[4/3] overflow-hidden rounded-md bg-paper-dim">
+                    <Image
+                      src={service.image}
+                      alt={service.title}
+                      fill
+                      sizes="(min-width: 768px) 33vw, 100vw"
+                      className="object-cover transition-transform duration-500 group-hover:scale-105"
+                    />
+                    <span className="absolute left-4 top-4 flex size-8 items-center justify-center rounded-full bg-ink/90 font-mono text-[10px] text-paper">
+                      0{i + 1}
+                    </span>
                   </div>
-                  <span className="hidden text-sm text-muted transition-colors duration-300 group-hover:text-ink/70 lg:block">
-                    Learn more
-                  </span>
-                  <ArrowRightOutlined className="[&>svg]:size-5 shrink-0 text-teal/60 transition-all duration-300 group-hover:translate-x-1 group-hover:text-teal" />
+
+                  <div className="relative z-10 mx-3 -mt-14 flex flex-1 flex-col rounded-md border border-line bg-paper p-5 shadow-[0_14px_35px_-24px_rgba(14,26,37,0.45)] transition-transform duration-300 group-hover:-translate-y-1 md:mx-4 md:p-6">
+                    <div className="flex items-start justify-between gap-4">
+                      <h3 className="text-lg tracking-tight text-ink transition-colors duration-300 group-hover:text-teal lg:text-xl">
+                        {service.title}
+                      </h3>
+                      <ArrowRightOutlined className="mt-1 shrink-0 [&>svg]:size-4 text-teal transition-transform duration-300 group-hover:translate-x-1" />
+                    </div>
+                    <p className="mt-3 text-sm leading-relaxed text-muted">{service.short}</p>
+                  </div>
                 </Link>
               </Reveal>
             );

@@ -32,6 +32,9 @@
 @layer base {
   html {
     scroll-behavior: smooth;
+    width: 100%;
+    max-width: 100%;
+    overflow-x: clip;
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -51,6 +54,9 @@
   body {
     background: var(--color-paper);
     color: var(--color-ink);
+    width: 100%;
+    max-width: 100%;
+    overflow-x: clip;
   }
 
   h1,

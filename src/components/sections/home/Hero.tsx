@@ -1,151 +1,110 @@
 "use client";
 
-import { motion, useReducedMotion, type Variants } from "motion/react";
-import { MoneyCollectOutlined, TeamOutlined, ClockCircleOutlined } from "@ant-design/icons";
+import { motion, useReducedMotion } from "motion/react";
 import { Button } from "@/components/ui/Button";
-import { Hero3D } from "@/components/three/Hero3D";
 import { Highlight } from "@/components/ui/Highlight";
-import { FloatingBadge } from "@/components/ui/FloatingBadge";
-import { CONTACT_CTA } from "@/lib/content";
+import { Hero3D } from "@/components/three/Hero3D";
 
-const HEADLINE_A = "The finance team you".split(" ");
-const HEADLINE_B = "didn't have to hire.";
-
-const wordContainer: Variants = {
-  hidden: {},
-  show: { transition: { staggerChildren: 0.045, delayChildren: 0.1 } },
-};
-
-const word: Variants = {
-  hidden: { opacity: 0, y: 28, rotate: 1.5 },
-  show: {
-    opacity: 1,
-    y: 0,
-    rotate: 0,
-    transition: { duration: 0.7, ease: [0.16, 1, 0.3, 1] },
-  },
-};
+const TRUST_POINTS = [
+  ["CA-led", "Qualified team"],
+  ["40-50%", "Lower cost"],
+  ["Real-time", "Clear reporting"],
+] as const;
 
 export function Hero() {
   const reduce = useReducedMotion();
 
   return (
-    <>
-      <section className="relative flex items-center overflow-hidden border-b border-paper/10 bg-ink lg:min-h-[calc(100dvh-112px)]">
-        <div className="absolute inset-0 opacity-35">
-          <Hero3D />
+    <section className="relative overflow-hidden border-b border-line bg-paper lg:min-h-[calc(100dvh-112px)]">
+      <div
+        aria-hidden
+        className="pointer-events-none absolute -right-28 top-16 size-[30rem] rounded-full bg-teal/15 blur-3xl"
+      />
+      <div
+        aria-hidden
+        className="pointer-events-none absolute bottom-12 right-[38%] size-36 rounded-full bg-accent/10 blur-2xl"
+      />
+
+      <div className="container-page relative grid items-center gap-10 py-12 md:py-16 lg:min-h-[calc(100dvh-112px)] lg:grid-cols-[0.92fr_1.08fr] lg:gap-8 lg:py-12">
+        <div className="relative z-10 max-w-2xl">
+          <motion.p
+            initial={reduce ? false : { opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            className="mb-5 font-mono text-xs font-medium uppercase tracking-[0.14em] text-teal"
+          >
+            Chartered accountant-led finance support
+          </motion.p>
+
+          <motion.h1
+            initial={reduce ? false : { opacity: 0, y: 28 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+            className="max-w-2xl text-balance text-4xl font-medium leading-[1.02] tracking-tight text-ink sm:text-5xl md:text-6xl lg:text-[4.25rem]"
+          >
+            <span className="block">Your books, handled.</span>
+            <Highlight delay={0.55}>Your business, growing.</Highlight>
+          </motion.h1>
+
+          <motion.p
+            initial={reduce ? false : { opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.28, ease: [0.16, 1, 0.3, 1] }}
+            className="mt-6 max-w-xl text-base leading-relaxed text-muted md:text-lg"
+          >
+            Chartered accountants manage your bookkeeping, tax and reporting, so you can focus on growth with clear, current numbers.
+          </motion.p>
+
+          <motion.div
+            initial={reduce ? false : { opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
+            className="mt-8 flex flex-wrap items-center gap-3"
+          >
+            <Button href="/contact-us">Book a free consultation</Button>
+            <Button href="/services/accounting-and-bookkeeping" variant="secondary">
+              Explore services
+            </Button>
+          </motion.div>
+
+          <motion.dl
+            initial={reduce ? false : { opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.6, delay: 0.58 }}
+            className="mt-9 grid max-w-xl grid-cols-3 divide-x divide-line border-y border-line py-4"
+          >
+            {TRUST_POINTS.map(([value, label]) => (
+              <div key={value} className="px-3 first:pl-0 md:px-5 md:first:pl-0">
+                <dt className="font-mono text-xs font-semibold text-ink md:text-sm">{value}</dt>
+                <dd className="mt-1 text-[10px] leading-snug text-muted md:text-xs">{label}</dd>
+              </div>
+            ))}
+          </motion.dl>
         </div>
-        <div
-          aria-hidden
-          className="pointer-events-none absolute inset-0 bg-gradient-to-r from-ink via-ink/90 to-ink/25"
-        />
-        <div
-          aria-hidden
-          className="pointer-events-none absolute -left-32 top-1/4 size-96 rounded-full bg-teal/[0.08] blur-[120px]"
-        />
 
-        <div className="container-page relative grid items-center gap-16 py-16 md:py-20 lg:grid-cols-[1.05fr_0.95fr] lg:gap-10">
-          <div className="max-w-xl">
-            <motion.span
-              initial={reduce ? false : { opacity: 0, y: 12 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5 }}
-              className="mb-6 flex items-center gap-2 text-[11px] font-medium uppercase tracking-[0.18em] text-teal"
-            >
-              <motion.span
-                className="inline-block size-1.5 rounded-full bg-accent"
-                animate={reduce ? undefined : { scale: [1, 1.6, 1], opacity: [1, 0.5, 1] }}
-                transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-              />
-              Accounting, tax, and CFO support
-            </motion.span>
-
-            <motion.h1
-              variants={reduce ? undefined : wordContainer}
-              initial={reduce ? false : "hidden"}
-              animate="show"
-              className="flex flex-wrap items-baseline text-balance text-4xl leading-[1.05] tracking-tight text-paper md:text-6xl lg:text-[3.75rem]"
-            >
-              {HEADLINE_A.map((w, i) => (
-                <motion.span key={i} variants={reduce ? undefined : word} className="mr-[0.28em] inline-block">
-                  {w}
-                </motion.span>
-              ))}
-              <motion.span variants={reduce ? undefined : word} className="inline-block">
-                <Highlight delay={0.9}>{HEADLINE_B}</Highlight>
-              </motion.span>
-            </motion.h1>
-
-            <motion.p
-              initial={reduce ? false : { opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.55, ease: [0.16, 1, 0.3, 1] }}
-              className="mt-6 max-w-lg text-balance text-base leading-relaxed text-paper/65 md:text-lg"
-            >
-              Chartered accountants handle your books, taxes, and reporting, so you spend
-              your hours on the business, not the balance sheet.
-            </motion.p>
-
-            <motion.div
-              initial={reduce ? false : { opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.68, ease: [0.16, 1, 0.3, 1] }}
-              className="mt-9 flex flex-wrap items-center gap-4"
-            >
-              <Button href="/contact-us">{CONTACT_CTA}</Button>
-              <Button href="/why-finbook" variant="secondary" showArrow={false}>
-                See how it works
-              </Button>
-            </motion.div>
-
-            <div className="mt-10 flex gap-3 overflow-x-auto pb-2 lg:hidden">
-              <FloatingBadge
-                icon={<MoneyCollectOutlined className="[&>svg]:size-4" />}
-                value="40-50%"
-                label="Lower cost"
-                delay={0.8}
-                className="shrink-0"
-              />
-              <FloatingBadge
-                icon={<TeamOutlined className="[&>svg]:size-4" />}
-                value="5 CAs"
-                label="Lead every account"
-                delay={0.88}
-                className="shrink-0"
-              />
-            </div>
-          </div>
-
-          <div className="relative hidden lg:block">
-            <div className="relative aspect-[4/5]" />
-
-            <FloatingBadge
-              icon={<MoneyCollectOutlined className="[&>svg]:size-5" />}
-              value="40-50%"
-              label="Lower cost than in-house"
-              delay={0.85}
-              floatDelay={0}
-              className="absolute -left-8 -top-6"
-            />
-            <FloatingBadge
-              icon={<TeamOutlined className="[&>svg]:size-5" />}
-              value="5"
-              label="Chartered accountants"
-              delay={0.95}
-              floatDelay={0.6}
-              className="absolute -bottom-6 -right-6"
-            />
-            <FloatingBadge
-              icon={<ClockCircleOutlined className="[&>svg]:size-5" />}
-              value="Real-time"
-              label="Reports, always current"
-              delay={1.05}
-              floatDelay={1.2}
-              className="absolute -right-10 top-1/3"
+        <motion.div
+          initial={reduce ? false : { opacity: 0, x: 40 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.8, delay: 0.16, ease: [0.16, 1, 0.3, 1] }}
+          className="pointer-events-none absolute inset-0 z-0 lg:pointer-events-auto lg:relative lg:inset-auto lg:min-h-[34rem]"
+        >
+          <div className="absolute inset-0 overflow-hidden opacity-30 lg:rounded-md lg:border lg:border-line lg:bg-paper-dim/55 lg:opacity-100 lg:shadow-[0_24px_60px_-42px_rgba(14,26,37,0.45)]">
+            <Hero3D />
+            <div
+              aria-hidden
+              className="pointer-events-none absolute inset-0 bg-gradient-to-b from-paper/90 via-paper/60 to-paper/75 lg:from-paper/15 lg:via-transparent lg:to-paper-dim/40"
             />
           </div>
-        </div>
-      </section>
-    </>
+          <div className="absolute left-4 top-4 hidden rounded-md border border-line bg-paper/90 px-4 py-3 shadow-sm backdrop-blur lg:block lg:left-6 lg:top-6">
+            <p className="font-mono text-xs font-semibold text-ink">Live finance view</p>
+            <p className="mt-1 text-[11px] text-muted">Your numbers move as your business does.</p>
+          </div>
+          <div className="absolute bottom-4 right-4 hidden rounded-md border border-teal/50 bg-paper/90 px-4 py-3 text-right shadow-sm backdrop-blur lg:block lg:bottom-6 lg:right-6">
+            <p className="font-mono text-xs font-semibold text-teal">Finface</p>
+            <p className="mt-1 text-[11px] text-muted">Reports, documents and conversations in one place.</p>
+          </div>
+        </motion.div>
+      </div>
+    </section>
   );
 }

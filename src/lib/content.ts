@@ -141,6 +141,7 @@ export const SERVICES = [
     short: "Daily books, reconciled and reported, on QuickBooks, Xero, Sage, or Zoho.",
     body: "A dedicated bookkeeping team works inside the software you already use, closing your books on schedule and keeping every account reconciled.",
     icon: "Books",
+    image: "/images/service-bookkeeping.jpg",
   },
   {
     slug: "cfo",
@@ -148,6 +149,7 @@ export const SERVICES = [
     short: "Forecasting, budgeting, and board-ready reporting without a full-time hire.",
     body: "A virtual CFO reads your numbers the way an investor would, building forecasts, budgets, and the reporting a growing business needs to raise or borrow.",
     icon: "ChartLineUp",
+    image: "/images/service-cfo.jpg",
   },
   {
     slug: "cpa-aca-assistance",
@@ -155,6 +157,7 @@ export const SERVICES = [
     short: "Exam-ready support for accountants working toward CPA or ACA certification.",
     body: "Structured mentorship and practical case exposure for accountants preparing for CPA or ACA examinations, built around real client work.",
     icon: "Certificate",
+    image: "/images/service-cpa-aca.jpg",
   },
 ] as const;
 
@@ -193,39 +196,46 @@ export const PLANS = [
 
 export const TEAM = [
   {
-    name: "Raj Anindya Mitra",
-    role: "Principal Oversight & Technical Review, Director",
-    credentials: "CA (ICAI), ACA (ICAEW)",
-    bio: "Provides firm-level supervision and technical review, and holds final accountability for engagement quality across the accounting and CFO teams.",
-    image: "/images/raj.png",
-  },
-  {
-    name: "Ruble Francis",
-    role: "Director, UK Operations",
-    credentials: "BSc, Actuarial Science",
-    bio: "Leads client coordination and compliance for Finbook's UK operations and client relationships, based in London.",
-    image: "/images/ruble.png",
-  },
-  {
-    name: "Allen Jose",
-    role: "Service Delivery & Review",
-    credentials: "CA (ICAI)",
-    bio: "Four years in corporate revival under insolvency law, plus six years across taxation, audit, and accounting.",
-    image: "/images/teampiclg4.jpg",
+    name: "Alen T Jose",
+    role: "Chartered Accountant, Director",
+    credentials: "B.Com, ACA",
+    bio: "Chartered Accountant and Director at Finbook Global.",
+    image: "/images/teampiclg1.jpg",
   },
   {
     name: "Reuben Jose",
-    role: "Service Delivery & Review",
-    credentials: "CA (ICAI)",
-    bio: "Christ University alumnus with audit experience at Grant Thornton, working across technology, manufacturing, banking, and healthcare.",
+    role: "Chartered Accountant, Director",
+    credentials: "B.Com, ACA",
+    bio: "Chartered Accountant and Director at Finbook Global.",
     image: "/images/teampiclg2.jpg",
   },
   {
-    name: "Alen T Jose",
-    role: "Service Delivery & Review",
-    credentials: "CA (ICAI)",
-    bio: "Six years across bookkeeping, audit, and consultancy in finance, medical, hospitality, retail, and shipbuilding.",
-    image: "/images/teampiclg1.jpg",
+    name: "Allen Jose",
+    role: "Chartered Accountant, Director",
+    credentials: "B.Com, ACA",
+    bio: "Chartered Accountant and Director at Finbook Global.",
+    image: "/images/teampiclg4.jpg",
+  },
+  {
+    name: "Ruble Francis",
+    role: "Actuarial Science, Director - UK",
+    credentials: "BSc",
+    bio: "Actuarial Science professional and Director - UK at Finbook Global.",
+    image: "/images/ruble.png",
+  },
+  {
+    name: "Raj Anindya Mitra",
+    role: "Chartered Accountant, Director - UK",
+    credentials: "B.Com, ACA (ICAEW), ACA (ICAI)",
+    bio: "Chartered Accountant and Director - UK at Finbook Global.",
+    image: "/images/raj.png",
+  },
+  {
+    name: "Jobin James",
+    role: "Head of Operations",
+    credentials: "M.Com, CAT",
+    bio: "Head of Operations at Finbook Global.",
+    image: "/images/untitled-design.png",
   },
 ] as const;
 

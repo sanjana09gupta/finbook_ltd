@@ -54,7 +54,7 @@ export function BenefitShowcase() {
     <section
       ref={sectionRef}
       onMouseMove={handleMouseMove}
-      className="group relative overflow-hidden border-b border-line bg-paper-dim py-14 md:py-20 lg:py-28"
+      className="group relative overflow-hidden border-b border-line bg-paper-dim py-10 md:py-20 lg:py-28"
     >
       <div
         aria-hidden
@@ -84,7 +84,7 @@ export function BenefitShowcase() {
           </h2>
         </Reveal>
 
-        <div className="mt-8 grid gap-3 md:mt-14 md:gap-4 lg:grid-cols-3 lg:grid-rows-2">
+        <div className="mt-6 grid gap-2.5 sm:mt-8 sm:grid-cols-2 md:mt-14 md:gap-4 lg:grid-cols-3 lg:grid-rows-2">
           {BENEFITS.map((item, i) => {
             const IconCmp = item.icon;
             const tall = i === 0;
@@ -96,8 +96,10 @@ export function BenefitShowcase() {
               >
                 <div
                   className={cn(
-                    "flex h-full flex-col justify-between rounded-md border border-line bg-paper p-5 text-ink transition-all duration-300 hover:border-teal md:p-8",
-                    tall ? "gap-5 md:gap-10" : "gap-5 sm:flex-row sm:items-center sm:gap-8",
+                    "flex h-full flex-row items-center gap-4 rounded-md border border-line bg-paper p-4 text-ink transition-all duration-300 hover:border-teal md:p-8",
+                    tall
+                      ? "sm:flex-col sm:items-stretch sm:justify-between sm:gap-5 md:gap-10"
+                      : "sm:flex-row sm:items-center sm:gap-8",
                   )}
                 >
                   <IconCmp className="[&>svg]:size-7 md:[&>svg]:size-9 shrink-0 text-teal transition-transform duration-300 group-hover:scale-110" />
@@ -113,7 +115,7 @@ export function BenefitShowcase() {
                     <h3 className="mt-2 text-base tracking-tight text-ink md:mt-3 md:text-lg">
                       {item.title}
                     </h3>
-                    <p className="mt-1.5 max-w-md text-sm leading-relaxed text-muted md:mt-2">
+                    <p className="mt-1.5 hidden max-w-md text-sm leading-relaxed text-muted sm:block md:mt-2">
                       {item.body}
                     </p>
                   </div>
