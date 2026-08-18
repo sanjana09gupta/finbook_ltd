@@ -54,7 +54,7 @@ export function BenefitShowcase() {
     <section
       ref={sectionRef}
       onMouseMove={handleMouseMove}
-      className="group relative overflow-hidden bg-ink bg-grid-dark py-14 md:py-20 lg:py-28"
+      className="group relative overflow-hidden border-b border-line bg-paper-dim py-14 md:py-20 lg:py-28"
     >
       <div
         aria-hidden
@@ -73,12 +73,12 @@ export function BenefitShowcase() {
 
       <div className="container-page relative">
         <Reveal>
-          <span className="mb-4 block text-[11px] font-medium uppercase tracking-[0.18em] text-paper/45">
+          <span className="mb-4 block text-[11px] font-medium uppercase tracking-[0.18em] text-muted">
             Why founders switch
           </span>
         </Reveal>
         <Reveal delay={0.05}>
-          <h2 className="max-w-2xl text-balance text-2xl font-medium leading-tight tracking-tight text-paper md:text-3xl lg:text-5xl">
+          <h2 className="max-w-2xl text-balance text-2xl font-medium leading-tight tracking-tight text-ink md:text-3xl lg:text-5xl">
             Three reasons growing businesses hand{" "}
             <Highlight>their books</Highlight> to Finbook.
           </h2>
@@ -96,7 +96,7 @@ export function BenefitShowcase() {
               >
                 <div
                   className={cn(
-                    "flex h-full flex-col justify-between rounded-md border border-paper/15 bg-ink-soft p-5 text-paper transition-all duration-300 hover:border-teal/50 md:p-8",
+                    "flex h-full flex-col justify-between rounded-md border border-line bg-paper p-5 text-ink transition-all duration-300 hover:border-teal md:p-8",
                     tall ? "gap-5 md:gap-10" : "gap-5 sm:flex-row sm:items-center sm:gap-8",
                   )}
                 >
@@ -110,10 +110,10 @@ export function BenefitShowcase() {
                     >
                       {item.value}
                     </p>
-                    <h3 className="mt-2 text-base tracking-tight text-paper md:mt-3 md:text-lg">
+                    <h3 className="mt-2 text-base tracking-tight text-ink md:mt-3 md:text-lg">
                       {item.title}
                     </h3>
-                    <p className="mt-1.5 max-w-md text-sm leading-relaxed text-paper/55 md:mt-2">
+                    <p className="mt-1.5 max-w-md text-sm leading-relaxed text-muted md:mt-2">
                       {item.body}
                     </p>
                   </div>

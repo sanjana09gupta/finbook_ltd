@@ -36,11 +36,10 @@ const SPANS = [
 
 export function WhyFinbookGrid({ showHeading = true }: { showHeading?: boolean }) {
   return (
-    <section className="border-b border-paper/10 bg-ink py-20 md:py-28">
+    <section className="border-b border-line bg-paper py-20 md:py-28">
       <div className="container-page">
         {showHeading && (
           <SectionHeading
-            tone="paper"
             eyebrow="Why Finbook"
             title={
               <>
@@ -53,19 +52,17 @@ export function WhyFinbookGrid({ showHeading = true }: { showHeading?: boolean }
         <div className={cn("grid gap-4 sm:grid-cols-2 lg:grid-cols-3", showHeading && "mt-16")}>
           {DIFFERENTIATORS.map((item, i) => {
             const IconCmp = ICONS[item.icon];
-            const dark = i === 0 || i === 5;
             const wide = i === 5;
             return (
               <Reveal key={item.title} delay={(i % 3) * 0.06} className={SPANS[i]}>
                 <SpotlightCard
-                  spotlightClassName={dark ? "mix-blend-screen" : undefined}
-                  radius={dark ? 320 : 240}
-                  intensity={dark ? 0.22 : 0.14}
+                  radius={i === 0 || i === 5 ? 320 : 240}
+                  intensity={i === 0 || i === 5 ? 0.2 : 0.14}
                   className={cn(
                     "flex h-full flex-col justify-between rounded-md border p-7 transition-all duration-300 hover:-translate-y-1",
-                    dark
-                      ? "border-teal/30 bg-ink-soft bg-grid-dark text-paper hover:border-teal/60"
-                      : "border-paper/10 bg-ink-soft text-paper hover:border-teal/40",
+                    i === 0 || i === 5
+                      ? "border-teal/50 bg-teal/15 text-ink hover:border-teal"
+                      : "border-line bg-paper-dim/70 text-ink hover:border-teal/60",
                     wide && "sm:flex-row sm:items-center sm:justify-start sm:gap-8",
                   )}
                 >
@@ -75,7 +72,7 @@ export function WhyFinbookGrid({ showHeading = true }: { showHeading?: boolean }
                     <p
                       className={cn(
                         "mt-2 max-w-md text-sm leading-relaxed",
-                        "text-paper/60",
+                        "text-muted",
                       )}
                     >
                       {item.body}

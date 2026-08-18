@@ -4,8 +4,7 @@ import { useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { MailOutlined, LinkedinFilled, InstagramFilled } from "@ant-design/icons";
-import { NAV_LINKS, OFFICES, MAP_LOCATIONS, SITE, CONTACT_CTA } from "@/lib/content";
-import { Button } from "@/components/ui/Button";
+import { NAV_LINKS, OFFICES, MAP_LOCATIONS, SITE } from "@/lib/content";
 
 export function Footer() {
   const footerRef = useRef<HTMLElement>(null);
@@ -45,9 +44,6 @@ export function Footer() {
             <p className="mt-4 text-sm leading-relaxed text-paper/60">
               {SITE.description}
             </p>
-            <Button href="/contact-us" variant="ghost" className="mt-5">
-              {CONTACT_CTA}
-            </Button>
           </div>
 
           <div>
