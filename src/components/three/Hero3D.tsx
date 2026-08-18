@@ -17,7 +17,7 @@ export function Hero3D() {
         className="absolute inset-0"
         style={{
           backgroundImage:
-            "radial-gradient(circle at 30% 20%, rgba(218,36,13,0.08), transparent 45%), radial-gradient(circle at 70% 60%, rgba(20,20,20,0.06), transparent 50%)",
+            "radial-gradient(circle at 30% 20%, rgba(126,184,176,0.22), transparent 45%), radial-gradient(circle at 70% 60%, rgba(224,164,88,0.14), transparent 50%)",
         }}
       />
     );

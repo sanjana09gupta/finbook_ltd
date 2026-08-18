@@ -13,6 +13,7 @@ type SplitImageProps = {
   image: string;
   imageAlt: string;
   reverse?: boolean;
+  compactImage?: boolean;
   children?: ReactNode;
 };
 
@@ -23,6 +24,7 @@ export function SplitImage({
   image,
   imageAlt,
   reverse = false,
+  compactImage = false,
   children,
 }: SplitImageProps) {
   const ref = useRef<HTMLDivElement>(null);
@@ -33,7 +35,12 @@ export function SplitImage({
   return (
     <section ref={ref} className="border-b border-line py-20 md:py-28">
       <div className="container-page grid items-center gap-12 md:grid-cols-2 md:gap-16">
-        <Reveal className={cn(reverse && "md:order-2")}>
+        <Reveal
+          className={cn(
+            reverse && "md:order-2",
+            compactImage && "w-full max-w-sm justify-self-center md:max-w-md",
+          )}
+        >
           <div className="overflow-hidden rounded-2xl bg-paper-dim">
             <motion.div style={{ y }}>
               <Image

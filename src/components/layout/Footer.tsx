@@ -1,14 +1,23 @@
 "use client";
 
-import { useRef } from "react";
-import Image from "next/image";
+import { useRef, useState } from "react";
 import Link from "next/link";
-import { MailOutlined, LinkedinFilled, InstagramFilled } from "@ant-design/icons";
-import { NAV_LINKS, OFFICES, MAP_LOCATIONS, SITE, CONTACT_CTA } from "@/lib/content";
-import { Button } from "@/components/ui/Button";
+import { usePathname } from "next/navigation";
+import {
+  EnvironmentOutlined,
+  InstagramFilled,
+  LinkedinFilled,
+  MailOutlined,
+} from "@ant-design/icons";
+import { NAV_LINKS, OFFICES, SITE } from "@/lib/content";
+
+const OFFICE_LABELS = ["India", "UK", "USA"] as const;
 
 export function Footer() {
   const footerRef = useRef<HTMLElement>(null);
+  const [activeOffice, setActiveOffice] = useState<number | null>(null);
+  const pathname = usePathname();
+  const isContactPage = pathname === "/contact-us";
 
   function handleMouseMove(e: React.MouseEvent<HTMLElement>) {
     const el = footerRef.current;
@@ -18,11 +27,17 @@ export function Footer() {
     el.style.setProperty("--spotlight-y", `${e.clientY - rect.top}px`);
   }
 
+  function toggleOffice(index: number) {
+    setActiveOffice((current) => (current === index ? null : index));
+  }
+
+  const selectedOffice = activeOffice === null ? null : OFFICES[activeOffice];
+
   return (
     <footer
       ref={footerRef}
       onMouseMove={handleMouseMove}
-      className="group relative overflow-hidden bg-ink bg-grid-dark text-paper"
+      className="group relative overflow-hidden border-t-[40px] border-paper-dim bg-ink bg-grid-dark text-paper"
     >
       <div
         aria-hidden
@@ -32,137 +47,118 @@ export function Footer() {
             "radial-gradient(560px circle at var(--spotlight-x, 50%) var(--spotlight-y, 50%), rgba(126,184,176,0.14), transparent 70%)",
         }}
       />
-      <div className="container-page relative py-12 md:py-16">
-        <div className="grid gap-10 md:grid-cols-[1.2fr_1fr_1fr] md:gap-8 lg:grid-cols-[1.4fr_1fr_1fr_1fr]">
-          <div className="max-w-sm">
-            <Image
-              src="/images/finbook-ltd-logo-white.png"
-              alt="Finbook Ltd"
-              width={632}
-              height={1145}
-              className="h-16 w-auto md:h-20"
-            />
-            <p className="mt-4 text-sm leading-relaxed text-paper/60">
-              {SITE.description}
-            </p>
-            <Button href="/contact-us" variant="ghost" className="mt-5">
-              {CONTACT_CTA}
-            </Button>
-          </div>
 
-          <div>
-            <h3 className="text-xs font-medium uppercase tracking-[0.18em] text-paper/45">
-              Navigate
-            </h3>
-            <ul className="mt-5 flex flex-col gap-3">
-              {NAV_LINKS.map((link) => (
-                <li key={link.href}>
-                  <Link
-                    href={link.href}
-                    className="text-sm text-paper/70 transition-colors hover:text-paper"
-                  >
-                    {link.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          <div>
-            <h3 className="text-xs font-medium uppercase tracking-[0.18em] text-paper/45">
-              Offices
-            </h3>
-            <ul className="mt-5 flex flex-col gap-4">
-              {OFFICES.map((office) => (
-                <li key={office.country} className="text-sm text-paper/70">
-                  <p className="font-medium text-paper/90">{office.country}</p>
-                  <a
-                    href={`https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(
-                      office.address,
-                    )}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="mt-0.5 block text-paper/55 hover:text-paper"
-                  >
-                    {office.address}
-                  </a>
-                  <a href={`tel:${office.phoneHref}`} className="mt-0.5 block hover:text-paper">
-                    {office.phone}
-                  </a>
-                </li>
-              ))}
-            </ul>
-
-            {MAP_LOCATIONS[0] && (
-              <a
-                href={`https://www.openstreetmap.org/?mlat=${MAP_LOCATIONS[0].lat}&mlon=${MAP_LOCATIONS[0].lng}#map=16/${MAP_LOCATIONS[0].lat}/${MAP_LOCATIONS[0].lng}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label={`Open a larger map of the Finbook ${MAP_LOCATIONS[0].label} office`}
-                className="relative mt-4 block aspect-square w-full max-w-[120px] overflow-hidden rounded-xl border border-paper/10"
-              >
-                {/* OSM's embed UI (zoom buttons, attribution text) doesn't fit
-                    a box this small, so the iframe is rendered at a larger
-                    intrinsic size and scaled down, keeping that UI legible
-                    instead of overflowing the clipped container. */}
-                <iframe
-                  title={`Map showing the Finbook ${MAP_LOCATIONS[0].label} office`}
-                  src={`https://www.openstreetmap.org/export/embed.html?bbox=${
-                    MAP_LOCATIONS[0].lng - 0.006
-                  }%2C${MAP_LOCATIONS[0].lat - 0.006}%2C${MAP_LOCATIONS[0].lng + 0.006}%2C${
-                    MAP_LOCATIONS[0].lat + 0.006
-                  }&layer=mapnik&marker=${MAP_LOCATIONS[0].lat}%2C${MAP_LOCATIONS[0].lng}`}
-                  loading="lazy"
-                  className="pointer-events-none absolute left-0 top-0 h-[250%] w-[250%] origin-top-left scale-[0.4] grayscale transition-[filter] duration-500 hover:grayscale-0"
-                />
-              </a>
-            )}
-          </div>
-
-          <div>
-            <h3 className="text-xs font-medium uppercase tracking-[0.18em] text-paper/45">
-              Connect
-            </h3>
-            <ul className="mt-5 flex flex-col gap-3">
-              <li>
-                <a
-                  href={`mailto:${SITE.email}`}
-                  className="flex items-center gap-2 text-sm text-paper/70 hover:text-paper"
-                >
-                  <MailOutlined className="[&>svg]:size-4" />
-                  {SITE.email}
-                </a>
+      <div className={`container-page relative ${isContactPage ? "py-5 md:py-7" : "py-8 md:py-14"}`}>
+        <nav aria-label="Footer navigation">
+          <ul className="flex gap-5 overflow-x-auto whitespace-nowrap border-b border-paper/10 pb-4 text-xs [scrollbar-width:none] [&::-webkit-scrollbar]:hidden md:gap-8 md:text-sm">
+            {NAV_LINKS.map((link) => (
+              <li key={link.href}>
+                <Link href={link.href} className="text-paper/65 transition-colors hover:text-teal">
+                  {link.label}
+                </Link>
               </li>
-            </ul>
-            <div className="mt-5 flex items-center gap-3">
+            ))}
+          </ul>
+        </nav>
+
+        <div
+          className={
+            isContactPage
+              ? "mt-4"
+              : "mt-6 grid gap-6 md:grid-cols-[1.1fr_0.9fr] md:gap-12"
+          }
+        >
+          <div>
+            {!isContactPage && (
+              <p className="max-w-md text-xs leading-relaxed text-paper/55 md:text-sm">
+                {SITE.description}
+              </p>
+            )}
+            <div className={`${isContactPage ? "mt-0" : "mt-4"} flex flex-wrap items-center gap-2.5`}>
+              <a
+                href={`mailto:${SITE.email}`}
+                className="flex items-center gap-2 text-xs text-paper/70 transition-colors hover:text-paper md:text-sm"
+              >
+                <MailOutlined className="[&>svg]:size-4" />
+                {SITE.email}
+              </a>
               <a
                 href="https://www.linkedin.com"
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Finbook Global on LinkedIn"
-                className="flex size-9 items-center justify-center rounded-full border border-paper/20 transition-colors hover:border-paper/60"
+                className="flex size-8 items-center justify-center rounded-full border border-paper/20 transition-colors hover:border-teal hover:text-teal"
               >
-                <LinkedinFilled className="[&>svg]:size-4" />
+                <LinkedinFilled className="[&>svg]:size-3.5" />
               </a>
               <a
                 href="https://www.instagram.com"
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Finbook Global on Instagram"
-                className="flex size-9 items-center justify-center rounded-full border border-paper/20 transition-colors hover:border-paper/60"
+                className="flex size-8 items-center justify-center rounded-full border border-paper/20 transition-colors hover:border-teal hover:text-teal"
               >
-                <InstagramFilled className="[&>svg]:size-4" />
+                <InstagramFilled className="[&>svg]:size-3.5" />
               </a>
             </div>
           </div>
+
+          {!isContactPage && <section aria-labelledby="footer-offices">
+            <h2 id="footer-offices" className="text-[10px] font-medium uppercase tracking-[0.18em] text-paper/45">
+              Select an office
+            </h2>
+            <div className="mt-3 flex gap-2">
+              {OFFICES.map((office, index) => {
+                const active = activeOffice === index;
+                return (
+                  <button
+                    key={office.country}
+                    type="button"
+                    aria-expanded={active}
+                    aria-pressed={active}
+                    aria-controls="footer-office-details"
+                    onClick={() => toggleOffice(index)}
+                    className={`flex items-center gap-1.5 rounded-md border px-3 py-2 text-xs transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-teal ${
+                      active
+                        ? "border-teal bg-teal text-ink"
+                        : "border-paper/20 text-paper/65 hover:border-teal hover:text-teal"
+                    }`}
+                  >
+                    <EnvironmentOutlined className="[&>svg]:size-3.5" />
+                    {OFFICE_LABELS[index] ?? office.country}
+                  </button>
+                );
+              })}
+            </div>
+
+            <div id="footer-office-details" aria-live="polite" className="min-h-16">
+              {selectedOffice && (
+                <div className="mt-3 border-l-2 border-teal pl-3 text-xs leading-relaxed text-paper/60">
+                  <a
+                    href={`https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(
+                      selectedOffice.address,
+                    )}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="block max-w-md hover:text-paper"
+                  >
+                    {selectedOffice.address}
+                  </a>
+                  <a href={`tel:${selectedOffice.phoneHref}`} className="mt-1 inline-block text-teal hover:text-paper">
+                    {selectedOffice.phone}
+                  </a>
+                </div>
+              )}
+            </div>
+          </section>}
         </div>
 
-        <div className="mt-10 flex flex-col gap-4 border-t border-paper/10 pt-6 text-xs text-paper/45 md:flex-row md:items-center md:justify-between">
+        <div className={`${isContactPage ? "mt-4" : "mt-5"} flex flex-col gap-2 border-t border-paper/10 pt-4 text-[10px] leading-relaxed text-paper/40 sm:flex-row sm:items-center sm:justify-between md:text-xs`}>
           <p>
             &copy; {new Date().getFullYear()} {SITE.legalName}. We do not provide services that
             require a license to practice public accountancy.
           </p>
-          <div className="flex gap-5">
+          <div className="flex shrink-0 gap-4">
             <Link href="/privacy-policy" className="hover:text-paper/70">
               Privacy policy
             </Link>

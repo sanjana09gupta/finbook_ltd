@@ -47,18 +47,18 @@ export function CtaBand({
         transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
       />
 
-      <div className="container-page relative py-16 text-center md:py-24">
+      <div className="container-page relative py-10 text-center md:py-24">
         <Reveal>
           <Image
             src="/images/finbook-ltd-logo-white.png"
             alt="Finbook Ltd"
             width={632}
             height={1145}
-            className="mx-auto h-20 w-auto md:h-28"
+            className="mx-auto h-14 w-auto md:h-28"
           />
         </Reveal>
         <Reveal>
-          <h2 className="mx-auto mt-10 max-w-4xl text-balance text-3xl font-semibold leading-tight tracking-tight text-paper md:mt-12 md:text-5xl">
+          <h2 className="mx-auto mt-6 max-w-4xl text-balance text-2xl font-semibold leading-tight tracking-tight text-paper md:mt-12 md:text-5xl">
             {title}
           </h2>
         </Reveal>
@@ -69,11 +69,11 @@ export function CtaBand({
             </p>
           </Reveal>
         )}
-        <Reveal delay={0.16} className="mt-9">
+        <Reveal delay={0.16} className="mt-6 md:mt-9">
           <Button
             href="/contact-us"
             variant="ghost"
-            className="min-w-56 justify-center rounded-lg border-teal px-8 py-4 text-base text-teal hover:border-teal hover:bg-teal hover:text-ink"
+            className="min-w-48 justify-center rounded-lg border-teal px-6 py-3 text-sm text-teal hover:border-teal hover:bg-teal hover:text-ink md:min-w-56 md:px-8 md:py-4 md:text-base"
           >
             Book a call
           </Button>

@@ -49,9 +49,10 @@ export default function CfoPage() {
       <SplitImage
         title="Strategy, not just spreadsheets"
         body="Your virtual CFO sits above the day-to-day bookkeeping, translating your numbers into decisions: where to cut, where to invest, and what to show the bank or your board next quarter."
-        image="/images/untitled-design.png"
-        imageAlt="Finbook Global CFO advisory session"
+        image="/images/service-cfo.jpg"
+        imageAlt="Virtual CFO financial planning and reporting"
         reverse
+        compactImage
       />
 
       <FeatureChecklist title="What a Finbook CFO actually covers" items={CFO_ITEMS} />

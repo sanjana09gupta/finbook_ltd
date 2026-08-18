@@ -19,7 +19,7 @@ const variants = {
   primary:
     "bg-teal text-ink hover:bg-paper border border-teal hover:border-paper",
   secondary: "bg-transparent text-teal border border-teal/60 hover:border-teal hover:bg-teal hover:text-ink",
-  ghost: "bg-transparent text-paper border border-teal/60 hover:border-teal hover:text-teal",
+  ghost: "bg-transparent text-paper border border-teal/60 hover:border-teal hover:bg-teal hover:text-ink",
 };
 
 export function Button({ href, children, variant = "primary", className, showArrow = true }: ButtonProps) {
