@@ -54,10 +54,15 @@ export function WhyFinbookGrid({ showHeading = true }: { showHeading?: boolean }
           className={cn(
             showHeading
               ? "mt-10 grid items-center gap-12 md:mt-14 lg:grid-cols-[1.05fr_0.95fr] lg:gap-16"
-              : "grid grid-cols-2 gap-2.5 md:gap-4 lg:grid-cols-3",
+              : "",
           )}
         >
-          <div className={cn(showHeading && "grid grid-cols-2 gap-2.5 md:gap-4")}>
+          <div
+            className={cn(
+              "grid grid-cols-2 gap-2.5 md:gap-4",
+              !showHeading && "lg:grid-cols-3",
+            )}
+          >
             {DIFFERENTIATORS.map((item, i) => {
               const IconCmp = ICONS[item.icon];
               const wide = !showHeading && i === 5;
