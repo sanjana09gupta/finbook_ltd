@@ -5,7 +5,7 @@ import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
-import { MenuOutlined, CloseOutlined, CaretDownOutlined } from "@ant-design/icons";
+import { MenuOutlined, CloseOutlined, CaretDownOutlined, ArrowRightOutlined } from "@ant-design/icons";
 import { NAV_LINKS } from "@/lib/content";
 import { Button } from "@/components/ui/Button";
 import { cn } from "@/lib/cn";
@@ -48,16 +48,11 @@ export function Header() {
   }, [open]);
 
   return (
+    <>
     <header
       ref={headerRef}
       className="sticky top-0 z-50 border-b border-paper/10 bg-ink/95 text-paper backdrop-blur-md"
     >
-      <div className="border-b border-paper/10 bg-ink-soft px-4 py-2 text-center text-paper md:py-2.5">
-        <p className="mx-auto max-w-6xl text-balance font-mono text-[11px] leading-relaxed tracking-[0.12em] sm:text-xs md:text-sm md:tracking-[0.16em]">
-          Onboarding new UK clients for the 2026/27 filing year — limited capacity.
-        </p>
-      </div>
-
       <div className="container-page flex h-16 items-center justify-between md:h-[72px]">
         <Link href="/" className="flex items-center gap-2" onClick={() => setOpen(false)}>
           <motion.div whileHover={{ rotate: -4, scale: 1.03 }} transition={{ type: "spring", stiffness: 300, damping: 15 }}>
@@ -150,7 +145,7 @@ export function Header() {
             animate={{ height: "auto", opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
             transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
-            className="absolute left-0 right-0 top-full max-h-[calc(100dvh-7rem)] overflow-y-auto border-t border-paper/10 bg-ink shadow-2xl lg:hidden"
+            className="absolute left-0 right-0 top-full max-h-[calc(100dvh-4rem)] overflow-y-auto border-t border-paper/10 bg-ink shadow-2xl lg:hidden"
           >
             <motion.nav
               className="container-page flex flex-col gap-1 py-4"
@@ -196,6 +191,22 @@ export function Header() {
           </motion.div>
         )}
       </AnimatePresence>
+
     </header>
+
+      <Link
+        href="/contact-us"
+        aria-label="Book a call with Finbook, first consultation free"
+        className="fixed bottom-3 left-3 right-3 z-40 mx-auto flex max-w-xl items-center justify-between gap-4 rounded-md border border-teal/45 bg-ink/95 px-4 py-2.5 text-paper shadow-[0_12px_32px_-16px_rgba(14,26,37,0.8)] backdrop-blur-md transition-colors hover:border-teal hover:bg-ink-soft sm:bottom-4 sm:left-auto sm:right-4 sm:mx-0 sm:w-auto sm:max-w-lg"
+      >
+        <span className="text-[10px] leading-snug text-paper/75 sm:text-xs">
+          Fixed monthly fee. First consultation free.
+        </span>
+        <span className="flex shrink-0 items-center gap-1.5 text-xs font-medium text-teal sm:text-sm">
+          Book a call
+          <ArrowRightOutlined className="-rotate-45 [&>svg]:size-3.5" />
+        </span>
+      </Link>
+    </>
   );
 }

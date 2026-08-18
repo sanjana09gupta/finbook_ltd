@@ -188,13 +188,22 @@ export function Footer() {
             &copy; {new Date().getFullYear()} {SITE.legalName}. We do not provide services that
             require a license to practice public accountancy.
           </p>
-          <div className="flex shrink-0 gap-4">
+          <div className="flex flex-wrap gap-x-4 gap-y-1 sm:justify-end">
             <Link href="/privacy-policy" className="hover:text-paper/70">
               Privacy policy
             </Link>
             <Link href="/terms-condition" className="hover:text-paper/70">
               Terms &amp; conditions
             </Link>
+            <a
+              href="https://www.flaticon.com/free-icons/left-click"
+              title="left click icons"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-paper/70"
+            >
+              Cursor icon by Md Tanvirul Haque
+            </a>
           </div>
         </div>
       </div>

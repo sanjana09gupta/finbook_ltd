@@ -111,6 +111,64 @@
   }
 }
 
+@property --light-spotlight-opacity {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 0;
+}
+
+main > section:not([class*="bg-ink"]) {
+  --light-spotlight-opacity: 0;
+  background-image: radial-gradient(
+    620px circle at var(--light-spotlight-x, 50%) var(--light-spotlight-y, 45%),
+    rgb(224 164 88 / var(--light-spotlight-opacity)),
+    transparent 68%
+  );
+  transition: --light-spotlight-opacity 420ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  main > section:not([class*="bg-ink"]):hover {
+    --light-spotlight-opacity: 0.2;
+  }
+
+  html,
+  body,
+  body * {
+    cursor: none !important;
+  }
+
+  .custom-pointer {
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 9999;
+    width: 44px;
+    height: 44px;
+    pointer-events: none;
+    background: url("/images/arrow.png") center / 32px 32px no-repeat;
+    opacity: 0;
+    contain: strict;
+    transform-origin: 9px 5px;
+    transition: opacity 120ms ease, filter 100ms ease;
+    will-change: transform, opacity;
+  }
+
+  .custom-pointer[data-clickable="true"] {
+    background-image: url("/images/left-click.png");
+    background-size: 44px 44px;
+    transform-origin: 8px 13px;
+  }
+
+  .custom-pointer[data-visible="true"] {
+    opacity: 1;
+  }
+
+  .custom-pointer[data-clickable="true"][data-pressed="true"] {
+    filter: brightness(0.88);
+  }
+}
+
 @keyframes marquee {
   from {
     transform: translateX(0);

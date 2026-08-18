@@ -1,4 +1,6 @@
-import type { ReactNode } from "react";
+"use client";
+
+import { useRef, type MouseEvent, type ReactNode } from "react";
 import { Reveal } from "@/components/motion/Reveal";
 import { cn } from "@/lib/cn";
 
@@ -10,18 +12,38 @@ type PageHeroProps = {
 };
 
 export function PageHero({ eyebrow, title, body, className }: PageHeroProps) {
+  const sectionRef = useRef<HTMLElement>(null);
+
+  function handleMouseMove(event: MouseEvent<HTMLElement>) {
+    const section = sectionRef.current;
+    if (!section) return;
+    const rect = section.getBoundingClientRect();
+    section.style.setProperty("--page-hero-x", `${event.clientX - rect.left}px`);
+    section.style.setProperty("--page-hero-y", `${event.clientY - rect.top}px`);
+  }
+
   return (
     <section
+      ref={sectionRef}
+      onMouseMove={handleMouseMove}
       className={cn(
-        "relative overflow-hidden border-b border-paper/10 bg-ink pb-16 pt-14 text-paper md:pb-20 md:pt-20",
+        "group relative overflow-hidden border-b border-paper/10 bg-ink bg-grid-dark pb-16 pt-14 text-paper md:pb-20 md:pt-20",
         className,
       )}
     >
       <div
         aria-hidden
+        className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100"
+        style={{
+          background:
+            "radial-gradient(620px circle at var(--page-hero-x, 35%) var(--page-hero-y, 45%), rgba(126,184,176,0.18), transparent 68%)",
+        }}
+      />
+      <div
+        aria-hidden
         className="pointer-events-none absolute -left-24 -top-24 size-72 rounded-full bg-teal/[0.08] blur-3xl"
       />
-      <div className="container-page relative">
+      <div className="container-page relative z-10">
         <div className="max-w-2xl">
           <Reveal>
             <span className="mb-5 block text-[11px] font-medium uppercase tracking-[0.18em] text-teal">

@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, type ReactNode } from "react";
+import { useRef, type PointerEvent, type ReactNode } from "react";
 import { cn } from "@/lib/cn";
 
 type SpotlightCardProps = {
@@ -20,7 +20,7 @@ export function SpotlightCard({
 }: SpotlightCardProps) {
   const ref = useRef<HTMLDivElement>(null);
 
-  function handleMouseMove(e: React.MouseEvent<HTMLDivElement>) {
+  function handlePointerMove(e: PointerEvent<HTMLDivElement>) {
     const el = ref.current;
     if (!el) return;
     const rect = el.getBoundingClientRect();
@@ -31,7 +31,7 @@ export function SpotlightCard({
   return (
     <div
       ref={ref}
-      onMouseMove={handleMouseMove}
+      onPointerMove={handlePointerMove}
       className={cn("group relative overflow-hidden", className)}
     >
       <div

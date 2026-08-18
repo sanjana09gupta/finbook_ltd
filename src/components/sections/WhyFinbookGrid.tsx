@@ -106,8 +106,7 @@ export function WhyFinbookGrid({ showHeading = true }: { showHeading?: boolean }
 
           {showHeading && (
             <Reveal delay={0.12} className="relative">
-              <div className="absolute -right-16 bottom-0 size-56 rounded-full bg-teal/15 blur-2xl" aria-hidden />
-              <div className="relative rounded-md border border-line bg-paper-dim/65 p-5 md:p-8">
+              <div className="relative flex items-center justify-center">
                 <span className="absolute left-4 top-4 z-10 max-w-40 rounded-md bg-teal px-4 py-3 text-sm font-medium leading-snug text-ink shadow-lg md:-left-4 md:top-2">
                   Finface, one-stop solution
                 </span>
@@ -116,7 +115,7 @@ export function WhyFinbookGrid({ showHeading = true }: { showHeading?: boolean }
                   alt="Finface accounting analytics dashboard displayed on a desktop computer"
                   width={576}
                   height={414}
-                  className="mx-auto mt-8 h-auto w-full object-contain md:mt-5"
+                  className="h-auto w-full max-w-[640px] object-contain"
                 />
               </div>
             </Reveal>
