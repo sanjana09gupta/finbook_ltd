@@ -29,7 +29,7 @@ export function Footer() {
         className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100"
         style={{
           background:
-            "radial-gradient(560px circle at var(--spotlight-x, 50%) var(--spotlight-y, 50%), rgba(218,36,13,0.14), transparent 70%)",
+            "radial-gradient(560px circle at var(--spotlight-x, 50%) var(--spotlight-y, 50%), rgba(126,184,176,0.14), transparent 70%)",
         }}
       />
       <div className="container-page relative py-12 md:py-16">

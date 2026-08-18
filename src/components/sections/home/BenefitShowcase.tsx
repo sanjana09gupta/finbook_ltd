@@ -61,12 +61,12 @@ export function BenefitShowcase() {
         className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100"
         style={{
           background:
-            "radial-gradient(560px circle at var(--spotlight-x, 50%) var(--spotlight-y, 50%), rgba(218,36,13,0.16), transparent 70%)",
+            "radial-gradient(560px circle at var(--spotlight-x, 50%) var(--spotlight-y, 50%), rgba(126,184,176,0.16), transparent 70%)",
         }}
       />
       <motion.div
         aria-hidden
-        className="pointer-events-none absolute -right-40 -top-40 size-[28rem] rounded-full bg-accent/[0.12] blur-[140px]"
+        className="pointer-events-none absolute -right-40 -top-40 size-[28rem] rounded-full bg-teal/[0.10] blur-[140px]"
         animate={reduce ? undefined : { opacity: [0.6, 1, 0.6] }}
         transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
       />
@@ -96,24 +96,24 @@ export function BenefitShowcase() {
               >
                 <div
                   className={cn(
-                    "flex h-full flex-col justify-between rounded-2xl border border-paper/25 bg-white p-5 text-black transition-all duration-300 hover:border-accent/50 hover:brightness-110 md:p-8",
+                    "flex h-full flex-col justify-between rounded-md border border-paper/15 bg-ink-soft p-5 text-paper transition-all duration-300 hover:border-teal/50 md:p-8",
                     tall ? "gap-5 md:gap-10" : "gap-5 sm:flex-row sm:items-center sm:gap-8",
                   )}
                 >
-                  <IconCmp className="[&>svg]:size-7 md:[&>svg]:size-9 shrink-0 text-accent transition-transform duration-300 group-hover:scale-110" />
+                  <IconCmp className="[&>svg]:size-7 md:[&>svg]:size-9 shrink-0 text-teal transition-transform duration-300 group-hover:scale-110" />
                   <div className={tall ? "" : "flex-1"}>
                     <p
                       className={cn(
-                        "font-mono font-medium tracking-tight text-black",
+                        "font-mono font-medium tracking-tight text-teal",
                         tall ? "text-3xl md:text-5xl lg:text-6xl" : "text-2xl md:text-4xl",
                       )}
                     >
                       {item.value}
                     </p>
-                    <h3 className="mt-2 text-base font-medium tracking-tight text-black md:mt-3 md:text-lg">
+                    <h3 className="mt-2 text-base tracking-tight text-paper md:mt-3 md:text-lg">
                       {item.title}
                     </h3>
-                    <p className="mt-1.5 max-w-md text-sm leading-relaxed text-black/60 md:mt-2">
+                    <p className="mt-1.5 max-w-md text-sm leading-relaxed text-paper/55 md:mt-2">
                       {item.body}
                     </p>
                   </div>

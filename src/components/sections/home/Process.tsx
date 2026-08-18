@@ -12,16 +12,17 @@ export function Process() {
   const reduce = useReducedMotion();
 
   return (
-    <section className="relative overflow-hidden border-b border-line py-20 md:py-28">
+    <section className="relative overflow-hidden border-b border-paper/10 bg-ink-soft py-20 md:py-28">
       <motion.div
         aria-hidden
-        className="pointer-events-none absolute right-[-10%] top-10 size-80 rounded-full bg-accent/[0.06] blur-3xl"
+        className="pointer-events-none absolute right-[-10%] top-10 size-80 rounded-full bg-teal/[0.07] blur-3xl"
         animate={reduce ? undefined : { scale: [1, 1.15, 1], opacity: [0.6, 1, 0.6] }}
         transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
       />
 
       <div className="container-page relative">
         <SectionHeading
+          tone="paper"
           eyebrow="How it works"
           title="One platform. Three steps. Zero surprises."
           body="Finface keeps you and your accounting team on the same page, in real time, without a single spreadsheet email."
@@ -100,7 +101,7 @@ export function Process() {
                         damping: 18,
                         delay: 0.3 + i * 0.1,
                       }}
-                      className="absolute right-4 top-4 flex size-6 items-center justify-center rounded-full bg-ink font-mono text-[10px] text-paper"
+                      className="absolute right-4 top-4 flex size-7 items-center justify-center rounded-full border border-accent font-mono text-[10px] text-accent"
                     >
                       {step.number}
                     </motion.span>
@@ -109,14 +110,14 @@ export function Process() {
               </motion.div>
 
               <div className="mt-6 flex items-center gap-2">
-                <h3 className="text-xl font-medium tracking-tight text-ink transition-colors duration-300 group-hover:text-accent">
+                <h3 className="text-xl tracking-tight text-paper transition-colors duration-300 group-hover:text-teal">
                   {step.title}
                 </h3>
                 {i < PROCESS_STEPS.length - 1 && (
-                  <ArrowRightOutlined className="hidden [&>svg]:size-4 text-accent opacity-0 transition-opacity duration-300 group-hover:opacity-100 md:block" />
+                  <ArrowRightOutlined className="hidden [&>svg]:size-4 text-teal opacity-0 transition-opacity duration-300 group-hover:opacity-100 md:block" />
                 )}
               </div>
-              <p className="mt-2.5 text-sm leading-relaxed text-muted">{step.body}</p>
+              <p className="mt-2.5 text-sm leading-relaxed text-paper/55">{step.body}</p>
             </Reveal>
           ))}
         </div>

@@ -39,7 +39,7 @@ export function PricingTiers() {
                   />
                 )}
                 {plan.featured && (
-                  <span className="absolute right-6 top-6 rounded-full bg-accent px-3 py-1 text-[11px] font-medium uppercase tracking-wide text-paper">
+                  <span className="absolute right-6 top-6 rounded-full bg-accent px-3 py-1 text-[11px] font-medium uppercase tracking-wide text-ink">
                     Popular
                   </span>
                 )}

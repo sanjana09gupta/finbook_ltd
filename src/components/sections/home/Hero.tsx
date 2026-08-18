@@ -31,17 +31,17 @@ export function Hero() {
 
   return (
     <>
-      <section className="relative flex items-center overflow-hidden border-b border-line lg:min-h-[calc(100dvh-72px)]">
-        <div className="absolute inset-0">
+      <section className="relative flex items-center overflow-hidden border-b border-paper/10 bg-ink lg:min-h-[calc(100dvh-112px)]">
+        <div className="absolute inset-0 opacity-35">
           <Hero3D />
         </div>
         <div
           aria-hidden
-          className="pointer-events-none absolute inset-0 bg-gradient-to-r from-paper via-paper/75 to-paper/10"
+          className="pointer-events-none absolute inset-0 bg-gradient-to-r from-ink via-ink/90 to-ink/25"
         />
         <div
           aria-hidden
-          className="pointer-events-none absolute -left-32 top-1/4 size-96 rounded-full bg-accent/[0.06] blur-[120px]"
+          className="pointer-events-none absolute -left-32 top-1/4 size-96 rounded-full bg-teal/[0.08] blur-[120px]"
         />
 
         <div className="container-page relative grid items-center gap-16 py-16 md:py-20 lg:grid-cols-[1.05fr_0.95fr] lg:gap-10">
@@ -50,7 +50,7 @@ export function Hero() {
               initial={reduce ? false : { opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
-              className="mb-6 flex items-center gap-2 text-[11px] font-medium uppercase tracking-[0.18em] text-muted"
+              className="mb-6 flex items-center gap-2 text-[11px] font-medium uppercase tracking-[0.18em] text-teal"
             >
               <motion.span
                 className="inline-block size-1.5 rounded-full bg-accent"
@@ -64,7 +64,7 @@ export function Hero() {
               variants={reduce ? undefined : wordContainer}
               initial={reduce ? false : "hidden"}
               animate="show"
-              className="flex flex-wrap items-baseline text-balance text-4xl font-medium leading-[1.05] tracking-tight text-ink md:text-6xl lg:text-[3.75rem]"
+              className="flex flex-wrap items-baseline text-balance text-4xl leading-[1.05] tracking-tight text-paper md:text-6xl lg:text-[3.75rem]"
             >
               {HEADLINE_A.map((w, i) => (
                 <motion.span key={i} variants={reduce ? undefined : word} className="mr-[0.28em] inline-block">
@@ -80,7 +80,7 @@ export function Hero() {
               initial={reduce ? false : { opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.55, ease: [0.16, 1, 0.3, 1] }}
-              className="mt-6 max-w-lg text-balance text-base leading-relaxed text-muted md:text-lg"
+              className="mt-6 max-w-lg text-balance text-base leading-relaxed text-paper/65 md:text-lg"
             >
               Chartered accountants handle your books, taxes, and reporting, so you spend
               your hours on the business, not the balance sheet.

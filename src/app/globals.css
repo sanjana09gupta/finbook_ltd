@@ -1,14 +1,16 @@
 @import "tailwindcss";
 
 :root {
-  --color-ink: #141414;
-  --color-ink-soft: #2b2b2b;
-  --color-paper: #fafaf8;
-  --color-paper-dim: #f0efe9;
-  --color-line: #e2e0d8;
-  --color-muted: #6b6b64;
-  --color-accent: #da240d;
-  --color-accent-soft: #f4d9d4;
+  /* Finbook brand palette */
+  --color-ink: #0e1a25;
+  --color-ink-soft: #172a38;
+  --color-paper: #e7ecf1;
+  --color-paper-dim: #dbe5e8;
+  --color-line: #b8c9ce;
+  --color-muted: #526675;
+  --color-accent: #e0a458;
+  --color-accent-soft: #f0d3ad;
+  --color-teal: #7eb8b0;
 }
 
 @theme inline {
@@ -20,6 +22,7 @@
   --color-muted: var(--color-muted);
   --color-accent: var(--color-accent);
   --color-accent-soft: var(--color-accent-soft);
+  --color-teal: var(--color-teal);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 
@@ -48,6 +51,19 @@
   body {
     background: var(--color-paper);
     color: var(--color-ink);
+  }
+
+  h1,
+  h2,
+  h3 {
+    font-family: Georgia, "Times New Roman", serif;
+    font-weight: 400;
+  }
+
+  a,
+  button {
+    outline-color: var(--color-teal);
+    outline-offset: 4px;
   }
 
   ::selection {
@@ -82,8 +98,8 @@
 
   .bg-grid-dark {
     background-image:
-      linear-gradient(to right, rgba(250, 250, 248, 0.11) 1px, transparent 1px),
-      linear-gradient(to bottom, rgba(250, 250, 248, 0.11) 1px, transparent 1px);
+      linear-gradient(to right, rgba(231, 236, 241, 0.11) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(231, 236, 241, 0.11) 1px, transparent 1px);
     background-size: 44px 44px;
     background-position: center top;
   }

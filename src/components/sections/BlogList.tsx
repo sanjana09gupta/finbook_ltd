@@ -20,13 +20,13 @@ const ICONS: Record<string, ComponentType<{ className?: string }>> = {
   ShieldCheck: SafetyOutlined,
 };
 
-// A distinct muted tint per category, so the grid reads as a set of
-// individual pieces rather than one uniform grey icon tile repeated.
+// Brand-palette tints keep categories distinct without introducing
+// off-brand accent colours.
 const TILE_STYLES: Record<string, string> = {
-  Bank: "bg-[#f3e9dc] text-[#8a5a2b]",
-  Buildings: "bg-[#e4ece8] text-[#3f6659]",
-  UsersThree: "bg-[#f4e6ec] text-[#8a3a52]",
-  ShieldCheck: "bg-[#e6eaf5] text-[#3d4f7a]",
+  Bank: "bg-accent-soft text-ink",
+  Buildings: "bg-teal/45 text-ink",
+  UsersThree: "bg-paper-dim text-muted",
+  ShieldCheck: "bg-ink/10 text-ink-soft",
 };
 
 function Thumbnail({ icon, size, className }: { icon: string; size: "lg" | "sm"; className?: string }) {

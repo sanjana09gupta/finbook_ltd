@@ -159,7 +159,7 @@ export function SlotPicker({
                     onClick={() => setDate(cell.iso)}
                     className={`relative aspect-square rounded-full text-sm transition-colors ${
                       selected
-                        ? "bg-accent text-paper"
+                        ? "bg-accent text-ink"
                         : disabled
                           ? "cursor-not-allowed text-muted/50"
                           : "text-ink hover:bg-paper-dim"
@@ -202,7 +202,7 @@ export function SlotPicker({
                         onClick={() => onSelect(slot)}
                         className={`w-full rounded-lg border px-3 py-2 text-sm transition-colors ${
                           selected
-                            ? "border-accent bg-accent text-paper"
+                            ? "border-accent bg-accent text-ink"
                             : "border-line bg-paper text-ink hover:border-accent"
                         }`}
                       >
