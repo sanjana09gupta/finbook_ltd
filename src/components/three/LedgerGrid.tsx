@@ -7,9 +7,9 @@ import * as THREE from "three";
 const COLS = 16;
 const ROWS = 10;
 const SPACING = 0.62;
-const INK = new THREE.Color("#2b2b2b");
-const MUTED = new THREE.Color("#b9b6ab");
-const ACCENT = new THREE.Color("#da240d");
+const INK = new THREE.Color("#0e1a25");
+const MUTED = new THREE.Color("#7eb8b0");
+const ACCENT = new THREE.Color("#e0a458");
 
 type Instance = {
   x: number;

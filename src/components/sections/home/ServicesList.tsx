@@ -21,9 +21,10 @@ const ICONS: Record<string, ComponentType<{ className?: string }>> = {
 
 export function ServicesList() {
   return (
-    <section className="border-b border-line py-20 md:py-28">
+    <section className="border-b border-paper/10 bg-ink py-20 md:py-28">
       <div className="container-page">
         <SectionHeading
+          tone="paper"
           title={
             <>
               Three ways we plug into your <Highlight>finance function</Highlight>.
@@ -31,35 +32,35 @@ export function ServicesList() {
           }
         />
 
-        <div className="mt-14 border-t border-line">
+        <div className="mt-14 border-t border-paper/15">
           {SERVICES.map((service, i) => {
             const IconCmp = ICONS[service.icon];
             return (
               <Reveal key={service.slug} delay={i * 0.05}>
                 <Link
                   href={`/services/${service.slug}`}
-                  className="group relative isolate grid items-center gap-4 overflow-hidden border-b border-line px-4 py-8 transition-colors duration-300 md:grid-cols-[auto_auto_1fr_auto_auto] md:gap-10 md:px-6"
+                  className="group relative isolate grid items-center gap-4 overflow-hidden border-b border-paper/15 px-4 py-8 transition-colors duration-300 md:grid-cols-[auto_auto_1fr_auto_auto] md:gap-10 md:px-6"
                 >
                   <span
                     aria-hidden
-                    className="absolute inset-0 -z-10 origin-left scale-x-0 bg-ink transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-x-100"
+                    className="absolute inset-0 -z-10 origin-left scale-x-0 bg-teal/10 transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-x-100"
                   />
-                  <span className="hidden font-mono text-sm text-ink/25 transition-colors duration-300 group-hover:text-paper/40 md:block">
+                  <span className="hidden font-mono text-sm text-paper/30 transition-colors duration-300 group-hover:text-teal md:block">
                     0{i + 1}
                   </span>
-                  <IconCmp className="hidden [&>svg]:size-9 shrink-0 text-accent transition-transform duration-300 group-hover:scale-110 md:block" />
+                  <IconCmp className="hidden [&>svg]:size-9 shrink-0 text-teal transition-transform duration-300 group-hover:scale-110 md:block" />
                   <div>
-                    <h3 className="text-xl font-medium tracking-tight text-ink transition-colors duration-300 group-hover:text-paper md:text-2xl">
+                    <h3 className="text-xl tracking-tight text-paper transition-colors duration-300 group-hover:text-teal md:text-2xl">
                       {service.title}
                     </h3>
-                    <p className="mt-1.5 max-w-lg text-sm leading-relaxed text-muted transition-colors duration-300 group-hover:text-paper/60">
+                    <p className="mt-1.5 max-w-lg text-sm leading-relaxed text-paper/55 transition-colors duration-300 group-hover:text-paper/75">
                       {service.short}
                     </p>
                   </div>
-                  <span className="hidden text-sm text-muted transition-colors duration-300 group-hover:text-paper/60 lg:block">
+                  <span className="hidden text-sm text-paper/45 transition-colors duration-300 group-hover:text-paper/70 lg:block">
                     Learn more
                   </span>
-                  <ArrowRightOutlined className="[&>svg]:size-5 shrink-0 text-ink/40 transition-all duration-300 group-hover:translate-x-1 group-hover:text-accent" />
+                  <ArrowRightOutlined className="[&>svg]:size-5 shrink-0 text-teal/60 transition-all duration-300 group-hover:translate-x-1 group-hover:text-teal" />
                 </Link>
               </Reveal>
             );

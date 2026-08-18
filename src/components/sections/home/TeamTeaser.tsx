@@ -5,10 +5,10 @@ import { Reveal } from "@/components/motion/Reveal";
 
 export function TeamTeaser() {
   return (
-    <section className="border-b border-line py-20 md:py-28">
+    <section className="border-b border-paper/10 bg-ink-soft py-20 md:py-28">
       <div className="container-page">
         <div className="flex flex-col items-start justify-between gap-6 md:flex-row md:items-end">
-          <SectionHeading title="Chartered accountants, not a call center." className="md:max-w-md" />
+          <SectionHeading tone="paper" eyebrow="People behind the work" title="Chartered accountants, not a call center." className="md:max-w-md" />
           <Reveal>
             <Button href="/about-us" variant="secondary">
               Meet the team

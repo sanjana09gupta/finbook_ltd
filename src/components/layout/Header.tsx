@@ -51,13 +51,19 @@ export function Header() {
   return (
     <header
       ref={headerRef}
-      className="sticky top-0 z-50 border-b border-line/70 bg-paper/85 backdrop-blur-md"
+      className="sticky top-0 z-50 border-b border-paper/10 bg-ink/95 text-paper backdrop-blur-md"
     >
+      <div className="border-b border-paper/10 bg-ink-soft px-4 py-2 text-center text-paper md:py-2.5">
+        <p className="mx-auto max-w-6xl text-balance font-mono text-[11px] leading-relaxed tracking-[0.12em] sm:text-xs md:text-sm md:tracking-[0.16em]">
+          Onboarding new UK clients for the 2026/27 filing year — limited capacity.
+        </p>
+      </div>
+
       <div className="container-page flex h-16 items-center justify-between md:h-[72px]">
         <Link href="/" className="flex items-center gap-2" onClick={() => setOpen(false)}>
           <motion.div whileHover={{ rotate: -4, scale: 1.03 }} transition={{ type: "spring", stiffness: 300, damping: 15 }}>
             <Image
-              src="/images/finbook-ltd-logo-header.png"
+              src="/images/finbook-ltd-logo-white.png"
               alt="Finbook Ltd"
               width={2150}
               height={833}
@@ -82,8 +88,8 @@ export function Header() {
                 <Link
                   href={link.href}
                   className={cn(
-                    "relative flex items-center gap-1 py-1.5 text-sm font-medium text-ink/70 transition-colors hover:text-ink",
-                    active && "text-ink",
+                    "relative flex items-center gap-1 py-1.5 text-sm font-medium text-paper/65 transition-colors hover:text-paper",
+                    active && "text-paper",
                   )}
                 >
                   {link.label}
@@ -101,12 +107,12 @@ export function Header() {
 
                 {"children" in link && link.children && (
                   <div className="invisible absolute left-1/2 top-full w-64 -translate-x-1/2 pt-3 opacity-0 transition-all duration-200 group-hover:visible group-hover:opacity-100">
-                    <div className="overflow-hidden rounded-2xl border border-line bg-paper shadow-[0_16px_40px_-16px_rgba(20,20,20,0.18)]">
+                    <div className="overflow-hidden rounded-md border border-paper/10 bg-ink-soft shadow-[0_18px_50px_-20px_rgba(0,0,0,0.55)]">
                       {link.children.map((child) => (
                         <Link
                           key={child.href}
                           href={child.href}
-                          className="block px-5 py-3 text-sm text-ink/75 transition-colors hover:bg-paper-dim hover:text-ink"
+                          className="block px-5 py-3 text-sm text-paper/70 transition-colors hover:bg-teal/10 hover:text-paper"
                         >
                           {child.label}
                         </Link>
@@ -128,7 +134,7 @@ export function Header() {
         <button
           type="button"
           aria-label={open ? "Close menu" : "Open menu"}
-          className="flex size-10 items-center justify-center rounded-full border border-line lg:hidden"
+          className="flex size-10 items-center justify-center rounded-md border border-paper/20 text-paper lg:hidden"
           onClick={() => setOpen((v) => !v)}
         >
           {open ? <CloseOutlined className="[&>svg]:size-5" /> : <MenuOutlined className="[&>svg]:size-5" />}
@@ -142,7 +148,7 @@ export function Header() {
             animate={{ height: "auto", opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
             transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
-            className="overflow-hidden border-t border-line lg:hidden"
+            className="overflow-hidden border-t border-paper/10 bg-ink lg:hidden"
           >
             <motion.nav
               className="container-page flex flex-col gap-1 py-4"
@@ -161,18 +167,18 @@ export function Header() {
                   <Link
                     href={link.href}
                     onClick={() => setOpen(false)}
-                    className="block py-2.5 text-base font-medium text-ink"
+                    className="block py-2.5 text-base font-medium text-paper"
                   >
                     {link.label}
                   </Link>
                   {"children" in link && link.children && (
-                    <div className="ml-3 flex flex-col border-l border-line pl-3">
+                    <div className="ml-3 flex flex-col border-l border-paper/15 pl-3">
                       {link.children.map((child) => (
                         <Link
                           key={child.href}
                           href={child.href}
                           onClick={() => setOpen(false)}
-                          className="py-2 text-sm text-muted"
+                          className="py-2 text-sm text-paper/60"
                         >
                           {child.label}
                         </Link>

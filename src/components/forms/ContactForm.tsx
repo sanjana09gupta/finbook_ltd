@@ -223,7 +223,7 @@ export function ContactForm() {
       <button
         type="submit"
         disabled={submitting}
-        className="mt-2 inline-flex w-fit items-center gap-2 rounded-full bg-ink px-6 py-3 text-sm font-medium text-paper transition-colors hover:bg-accent disabled:cursor-not-allowed disabled:opacity-60"
+        className="mt-2 inline-flex w-fit items-center gap-2 rounded-full bg-ink px-6 py-3 text-sm font-medium text-paper transition-colors hover:bg-accent hover:text-ink disabled:cursor-not-allowed disabled:opacity-60"
       >
         {submitting && <LoadingOutlined className="[&>svg]:size-3.5 animate-spin" />}
         {submitting ? "Booking…" : "Book consultation"}

@@ -36,10 +36,11 @@ const SPANS = [
 
 export function WhyFinbookGrid({ showHeading = true }: { showHeading?: boolean }) {
   return (
-    <section className="border-b border-line py-20 md:py-28">
+    <section className="border-b border-paper/10 bg-ink py-20 md:py-28">
       <div className="container-page">
         {showHeading && (
           <SectionHeading
+            tone="paper"
             eyebrow="Why Finbook"
             title={
               <>
@@ -61,20 +62,20 @@ export function WhyFinbookGrid({ showHeading = true }: { showHeading?: boolean }
                   radius={dark ? 320 : 240}
                   intensity={dark ? 0.22 : 0.14}
                   className={cn(
-                    "flex h-full flex-col justify-between rounded-2xl border p-7 transition-all duration-300 hover:-translate-y-1",
+                    "flex h-full flex-col justify-between rounded-md border p-7 transition-all duration-300 hover:-translate-y-1",
                     dark
-                      ? "border-ink bg-ink bg-grid-dark text-paper hover:border-accent/60"
-                      : "border-line bg-paper text-ink hover:border-ink/30 hover:shadow-[0_20px_40px_-24px_rgba(20,20,20,0.25)]",
+                      ? "border-teal/30 bg-ink-soft bg-grid-dark text-paper hover:border-teal/60"
+                      : "border-paper/10 bg-ink-soft text-paper hover:border-teal/40",
                     wide && "sm:flex-row sm:items-center sm:justify-start sm:gap-8",
                   )}
                 >
-                  <IconCmp className="[&>svg]:size-8 shrink-0 text-accent transition-transform duration-300 group-hover:scale-110 group-hover:-rotate-6" />
+                  <IconCmp className="[&>svg]:size-8 shrink-0 text-teal transition-transform duration-300 group-hover:scale-110 group-hover:-rotate-6" />
                   <div className={cn(wide ? "mt-0" : "mt-8")}>
                     <h3 className="text-lg font-medium tracking-tight">{item.title}</h3>
                     <p
                       className={cn(
                         "mt-2 max-w-md text-sm leading-relaxed",
-                        dark ? "text-paper/65" : "text-muted",
+                        "text-paper/60",
                       )}
                     >
                       {item.body}
