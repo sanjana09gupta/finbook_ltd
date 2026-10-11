@@ -1,10 +1,10 @@
 const BRAND = {
-  ink: "#141414",
-  paper: "#fafaf8",
-  paperDim: "#f0efe9",
-  line: "#e2e0d8",
-  muted: "#6b6b64",
-  accent: "#da240d",
+  ink: "#062b4d",
+  paper: "#fbfcfc",
+  paperDim: "#eef3f5",
+  line: "#cad6dc",
+  muted: "#526776",
+  accent: "#e1282d",
 };
 
 function escapeHtml(value: string): string {

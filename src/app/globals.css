@@ -2,15 +2,15 @@
 
 :root {
   /* Finbook brand palette */
-  --color-ink: #0e1a25;
-  --color-ink-soft: #172a38;
-  --color-paper: #e7ecf1;
-  --color-paper-dim: #dbe5e8;
-  --color-line: #b8c9ce;
-  --color-muted: #526675;
-  --color-accent: #e0a458;
-  --color-accent-soft: #f0d3ad;
-  --color-teal: #7eb8b0;
+  --color-ink: #062b4d;
+  --color-ink-soft: #103d63;
+  --color-paper: #fbfcfc;
+  --color-paper-dim: #eef3f5;
+  --color-line: #cad6dc;
+  --color-muted: #526776;
+  --color-accent: #e1282d;
+  --color-accent-soft: #f8d5d6;
+  --color-teal: #d9282d;
 }
 
 @theme inline {
@@ -121,7 +121,7 @@ main > section:not([class*="bg-ink"]) {
   --light-spotlight-opacity: 0;
   background-image: radial-gradient(
     620px circle at var(--light-spotlight-x, 50%) var(--light-spotlight-y, 45%),
-    rgb(224 164 88 / var(--light-spotlight-opacity)),
+    rgb(225 40 45 / var(--light-spotlight-opacity)),
     transparent 68%
   );
   transition: --light-spotlight-opacity 420ms cubic-bezier(0.22, 1, 0.36, 1);

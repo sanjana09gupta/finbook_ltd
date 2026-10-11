@@ -36,7 +36,7 @@ export function PageHero({ eyebrow, title, body, className }: PageHeroProps) {
         className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100"
         style={{
           background:
-            "radial-gradient(620px circle at var(--page-hero-x, 35%) var(--page-hero-y, 45%), rgba(126,184,176,0.18), transparent 68%)",
+            "radial-gradient(620px circle at var(--page-hero-x, 35%) var(--page-hero-y, 45%), rgba(225,40,45,0.18), transparent 68%)",
         }}
       />
       <div

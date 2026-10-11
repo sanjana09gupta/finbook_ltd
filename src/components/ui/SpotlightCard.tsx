@@ -41,7 +41,7 @@ export function SpotlightCard({
           spotlightClassName,
         )}
         style={{
-          background: `radial-gradient(${radius}px circle at var(--spotlight-x, 50%) var(--spotlight-y, 50%), rgba(218,36,13,${intensity}), transparent 70%)`,
+          background: `radial-gradient(${radius}px circle at var(--spotlight-x, 50%) var(--spotlight-y, 50%), rgba(225,40,45,${intensity}), transparent 70%)`,
         }}
       />
       {children}
