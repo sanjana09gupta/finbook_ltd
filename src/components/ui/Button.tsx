@@ -17,9 +17,9 @@ type ButtonProps = {
 
 const variants = {
   primary:
-    "bg-teal text-ink hover:bg-paper border border-teal hover:border-paper",
-  secondary: "bg-transparent text-teal border border-teal/60 hover:border-teal hover:bg-teal hover:text-ink",
-  ghost: "bg-transparent text-paper border border-teal/60 hover:border-teal hover:bg-teal hover:text-ink",
+    "border border-accent bg-accent text-paper hover:border-ink hover:bg-ink",
+  secondary: "border border-ink/30 bg-transparent text-ink hover:border-accent hover:bg-accent hover:text-paper",
+  ghost: "border border-paper/50 bg-transparent text-paper hover:border-accent hover:bg-accent hover:text-paper",
 };
 
 export function Button({ href, children, variant = "primary", className, showArrow = true }: ButtonProps) {
@@ -53,7 +53,7 @@ export function Button({ href, children, variant = "primary", className, showArr
         onMouseMove={handleMouseMove}
         onMouseLeave={handleMouseLeave}
         className={cn(
-          "group inline-flex items-center gap-2 whitespace-nowrap rounded-md px-6 py-3 text-sm font-medium tracking-tight transition-colors duration-300 focus-visible:outline focus-visible:outline-2",
+          "group inline-flex items-center gap-2 whitespace-nowrap rounded-none px-6 py-3 text-sm font-semibold tracking-tight transition-colors duration-300 focus-visible:outline focus-visible:outline-2 active:scale-[0.98]",
           variants[variant],
           className,
         )}

@@ -51,7 +51,7 @@ export function Header() {
     <>
     <header
       ref={headerRef}
-      className="sticky top-0 z-50 border-b border-paper/10 bg-ink/95 text-paper backdrop-blur-md"
+      className="sticky top-0 z-50 border-b border-line bg-paper/95 text-ink backdrop-blur-md"
     >
       <div className="container-page flex h-16 items-center justify-between md:h-[72px]">
         <Link href="/" className="flex items-center gap-2" onClick={() => setOpen(false)}>
@@ -61,7 +61,7 @@ export function Header() {
               alt="Finbook Ltd"
               width={2150}
               height={833}
-              className="h-9 w-auto brightness-0 invert md:h-11"
+              className="h-9 w-auto md:h-11"
               priority
             />
           </motion.div>
@@ -82,8 +82,8 @@ export function Header() {
                 <Link
                   href={link.href}
                   className={cn(
-                    "relative flex items-center gap-1 py-1.5 text-sm font-medium text-paper/65 transition-colors hover:text-paper",
-                    active && "text-paper",
+                    "relative flex items-center gap-1 py-1.5 text-sm font-medium text-muted transition-colors hover:text-ink",
+                    active && "text-ink",
                   )}
                 >
                   {link.label}
@@ -101,12 +101,12 @@ export function Header() {
 
                 {"children" in link && link.children && (
                   <div className="invisible absolute left-1/2 top-full w-64 -translate-x-1/2 pt-3 opacity-0 transition-all duration-200 group-hover:visible group-hover:opacity-100">
-                    <div className="overflow-hidden rounded-md border border-paper/10 bg-ink-soft shadow-[0_18px_50px_-20px_rgba(0,0,0,0.55)]">
+                    <div className="overflow-hidden border border-line bg-paper shadow-[0_18px_50px_-20px_rgba(6,43,77,0.22)]">
                       {link.children.map((child) => (
                         <Link
                           key={child.href}
                           href={child.href}
-                          className="block px-5 py-3 text-sm text-paper/70 transition-colors hover:bg-teal/10 hover:text-paper"
+                          className="block px-5 py-3 text-sm text-muted transition-colors hover:bg-accent-soft hover:text-ink"
                         >
                           {child.label}
                         </Link>
@@ -130,7 +130,7 @@ export function Header() {
           aria-label={open ? "Close menu" : "Open menu"}
           aria-controls="mobile-navigation"
           aria-expanded={open}
-          className="flex size-10 items-center justify-center rounded-md border border-paper/20 text-paper lg:hidden"
+          className="flex size-10 items-center justify-center border border-line text-ink lg:hidden"
           onClick={() => setOpen((v) => !v)}
         >
           {open ? <CloseOutlined className="[&>svg]:size-5" /> : <MenuOutlined className="[&>svg]:size-5" />}
@@ -145,7 +145,7 @@ export function Header() {
             animate={{ height: "auto", opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
             transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
-            className="absolute left-0 right-0 top-full max-h-[calc(100dvh-4rem)] overflow-y-auto border-t border-paper/10 bg-ink shadow-2xl lg:hidden"
+            className="absolute left-0 right-0 top-full max-h-[calc(100dvh-4rem)] overflow-y-auto border-t border-line bg-paper shadow-2xl lg:hidden"
           >
             <motion.nav
               className="container-page flex flex-col gap-1 py-4"
@@ -164,18 +164,18 @@ export function Header() {
                   <Link
                     href={link.href}
                     onClick={() => setOpen(false)}
-                    className="block py-2.5 text-base font-medium text-paper"
+                    className="block py-2.5 text-base font-medium text-ink"
                   >
                     {link.label}
                   </Link>
                   {"children" in link && link.children && (
-                    <div className="ml-3 flex flex-col border-l border-paper/15 pl-3">
+                    <div className="ml-3 flex flex-col border-l border-line pl-3">
                       {link.children.map((child) => (
                         <Link
                           key={child.href}
                           href={child.href}
                           onClick={() => setOpen(false)}
-                          className="py-2 text-sm text-paper/60"
+                          className="py-2 text-sm text-muted"
                         >
                           {child.label}
                         </Link>

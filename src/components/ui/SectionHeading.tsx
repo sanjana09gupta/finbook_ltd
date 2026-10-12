@@ -31,8 +31,8 @@ export function SectionHeading({
         <Reveal>
           <span
             className={cn(
-              "mb-4 block text-[11px] font-medium uppercase tracking-[0.18em]",
-              tone === "ink" ? "text-muted" : "text-paper/60",
+              "catalogue-eyebrow mb-5",
+              tone === "ink" ? "text-muted" : "text-paper/70",
             )}
           >
             {eyebrow}
@@ -42,7 +42,7 @@ export function SectionHeading({
       <Reveal delay={0.05}>
         <h2
           className={cn(
-            "text-balance text-3xl font-medium tracking-tight md:text-4xl lg:text-[2.75rem]",
+            "text-balance text-4xl md:text-5xl lg:text-[3.25rem]",
             tone === "ink" ? "text-ink" : "text-paper",
           )}
         >
